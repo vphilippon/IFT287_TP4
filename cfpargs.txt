@@ -1,0 +1,1 @@
+-inplace -dest . -pc bin/tp4/TupleXXXXXXX.class bin/tp4/TupleXXXXXX.class
