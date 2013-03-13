@@ -1,1 +1,1 @@
--inplace -dest . -pc bin/tp4/TupleXXXXXXX.class bin/tp4/TupleXXXXXX.class
+-inplace -dest . -pc bin/tp4/TupleFilm.class bin/tp4/TuplePersonne.class bin/tp4/TupleRoleEpisode.class bin/tp4/TupleRoleFilm.class bin/tp4/TupleSerie.class
