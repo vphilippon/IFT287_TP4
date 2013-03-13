@@ -1,5 +1,9 @@
 package tp4;
 
+import com.odi.*;
+import com.odi.util.*;
+import com.odi.util.query.*;
+import java.util.*;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,8 +23,23 @@ class Film {
     private PreparedStatement stmtGetFilmFrom;
 
     public Film(Connexion cx) throws SQLException {
-        this.cx = cx;
-        init();
+        Transaction tr = Transaction.begin(ObjectStore.UPDATE);
+        try {
+      try {
+          allFilms = (Map<Integer,TupleFilm>) cx.getDatabase().getRoot("allFilms");
+          }
+      catch (DatabaseRootNotFoundException e) {
+          /* Creation de la racine */
+          cx.getDatabase().createRoot("allFilms", allFilms = new OSHashMap<Integer,TupleFilm>(10));
+          }
+      /* Fin de la transaction avec retention des objets creux */
+      tr.commit(ObjectStore.RETAIN_HOLLOW);
+      }
+    catch (Exception e)
+        {
+        tr.abort(ObjectStore.RETAIN_HOLLOW);
+        throw e;
+        }
     }
 
     private void init() throws SQLException {
@@ -41,13 +60,7 @@ class Film {
     }
 
     public boolean existe(String titre, Date dateSortie) throws SQLException {
-        boolean filmExiste;
-        stmtFilmExiste.setString(1,titre);
-        stmtFilmExiste.setDate(2,dateSortie);
-        ResultSet rs = stmtFilmExiste.executeQuery();
-        filmExiste = rs.next();
-        rs.close();
-        return filmExiste;
+        return ("".equals(allFilms.get(titre)) && (allFilms.get(dateSortie) != null));
     }
 
     public void ajouter(String titre, Date dateSortie, String realisateur) throws SQLException {
