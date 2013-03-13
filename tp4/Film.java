@@ -6,10 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 class Film {
 
     private Connexion cx;
+    private Map<Integer,TupleFilm> allFilms;
     private PreparedStatement stmtFilmExiste;
     private PreparedStatement stmtAjouterFilm;
     private PreparedStatement stmtSuppFilm;
