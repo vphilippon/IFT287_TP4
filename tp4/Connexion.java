@@ -1,6 +1,6 @@
 package tp4;
 
-import java.sql.*;
+import com.odi.*;
 
 /**
  * Gestionnaire d'une connexion avec une BD relationnelle via JDBC.
@@ -26,118 +26,49 @@ import java.sql.*;
  */
 public class Connexion {
 
-	private Connection conn;
+	private Database db;
+
+	private Session session;
 
 	/**
-	 * Ouverture d'une connexion en mode autocommit false et serialisable (si
-	 * supporte)
-	 * 
-	 * @param serveur SQL de la BD
-	 * @bd nom de la base de donnees
-	 * @user userid sur le serveur SQL
-	 * @pass mot de passe sur le serveur SQL
+	 * ouverture d'une connexion
 	 */
-	public Connexion(String serveur, String bd, String user, String pass)
-			throws SQLException {
-		Driver d;
+	public Connexion(String dbName) throws Tp4Exception {
+
 		try {
-			if (serveur.equals("local")) {
-				d = (Driver) Class.forName("oracle.jdbc.driver.OracleDriver")
-						.newInstance();
-				DriverManager.registerDriver(d);
-				conn = DriverManager.getConnection(
-						"jdbc:oracle:thin:@127.0.0.1:1521:" + bd, user, pass);
-			}
-			if (serveur.equals("sti")) {
-				d = (Driver) Class.forName("oracle.jdbc.driver.OracleDriver")
-						.newInstance();
-				DriverManager.registerDriver(d);
-				conn = DriverManager.getConnection(
-						"jdbc:oracle:thin:@io.usherbrooke.ca:1521:" + bd, user,
-						pass);
-			} else if (serveur.equals("postgres")) {
-				d = (Driver) Class.forName("org.postgresql.Driver")
-						.newInstance();
-				DriverManager.registerDriver(d);
-				conn = DriverManager.getConnection("jdbc:postgresql:" + bd,
-						user, pass);
-			} else
-			{
-				throw new Tp4Exception("Serveur non reconnu");
-			}
+			/* Creation de la session et ajout de ce thread a la session. */
+			session = Session.create(null, null);
+			session.join();
 
-			// mettre en mode de commit manuel
-			conn.setAutoCommit(false);
-
-			// mettre en mode serialisable si possible
-			// (plus haut niveau d'integrite l'acces concurrent aux donnees)
-			DatabaseMetaData dbmd = conn.getMetaData();
-			if (dbmd.supportsTransactionIsolationLevel(Connection.TRANSACTION_SERIALIZABLE)) {
-				conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
-				System.out.println("Ouverture de la connexion en mode s�rialisable :\n"
-								+ "Estampille "
-								+ System.currentTimeMillis()
-								+ " " + conn);
-			} else
-				System.out.println("Ouverture de la connexion en mode read committed (default) :\n"
-								+ "Heure "
-								+ System.currentTimeMillis()
-								+ " "
-								+ conn);
-		}// try
-		catch (SQLException e) {
-			throw e;
+			/* Ouverture de la BD ou creation si necessaire */
+			try {
+				db = Database.open(dbName, ObjectStore.UPDATE);
+			} catch (DatabaseNotFoundException e) {
+				db = Database.create(dbName, ObjectStore.ALL_READ
+						| ObjectStore.ALL_WRITE);
+			}
 		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			throw new SQLException("JDBC Driver non instanci�");
+			System.out.println(e);
+			throw new Tp4Exception("Impossible d'ouvrir la connexion");
 		}
+	}
+
+	/**
+	 * retourne la dataBase de la connexion
+	 */
+	public Database getDatabase() {
+		return db;
 	}
 
 	/**
 	 * fermeture d'une connexion
 	 */
-	public void fermer() throws SQLException {
-		conn.rollback();
-		conn.close();
-		System.out.println("Connexion fermee" + " " + conn);
+	public void fermer() {
+		try {
+			db.close();
+		} catch (Exception e) {
+		} finally {
+			session.terminate();
+		}
 	}
-
-	/**
-	 * commit
-	 */
-	public void commit() throws SQLException {
-		conn.commit();
-	}
-
-	public void setIsolationReadCommited() throws SQLException {
-		conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-	}
-
-	/**
-	 * rollback
-	 */
-	public void rollback() throws SQLException {
-		conn.rollback();
-	}
-
-	/**
-	 * retourne la Connection jdbc
-	 */
-	public Connection getConnection() {
-		return conn;
-	}
-
-	public void setAutoCommit(boolean m) throws SQLException {
-		conn.setAutoCommit(m);
-	}
-
-	/**
-	 * Retourne la liste des serveurs supportes par ce gestionnaire de
-	 * connexions
-	 */
-	public static String serveursSupportes() {
-		return "local : Oracle installe localement 127.0.0.1\n"
-				+ "sti   : Oracle installe au Service des technologies de l'information\n"
-				+ "postgres : Postgres installe localement\n";
-	}
-}// Classe Connexion
+}
