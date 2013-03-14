@@ -4,8 +4,8 @@ import java.util.Date;
 
 class TupleFilm 
 {
-    static private int courantID = 0;
-    private int ID;
+    static private int courantId = 0;
+    private int Id;
     private String titre;
     private Date dateSortie;
     private String description;
@@ -13,7 +13,7 @@ class TupleFilm
     private String realisateur;
 
     public TupleFilm(String titre, Date dateSortie, String description, int duree, String realisateur) {
-        this.ID = ++courantID;
+        this.Id = ++courantId;
         this.titre = titre;
         this.dateSortie = dateSortie;
         this.description = description;
@@ -21,12 +21,12 @@ class TupleFilm
         this.realisateur = realisateur;
     }
     
-    public int getCourantID(){
-        return courantID;
+    public int getCourantId(){
+        return courantId;
     }
     
-    public int getID(){
-        return this.ID;
+    public int getId(){
+        return this.Id;
     }
 
     public Date getDateSortie() {
@@ -48,4 +48,26 @@ class TupleFilm
     public String getTitre() {
         return this.titre;
     }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public void setDateSortie(Date dateSortie) {
+        this.dateSortie = dateSortie;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDuree(int duree) {
+        this.duree = duree;
+    }
+
+    public void setRealisateur(String realisateur) {
+        this.realisateur = realisateur;
+    }
+    
+    
 }
