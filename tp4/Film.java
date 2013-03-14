@@ -2,22 +2,17 @@ package tp4;
 
 import com.odi.*;
 import com.odi.util.*;
-import com.odi.util.query.*;
-import java.util.*;
 import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class Film {
 
     private Connexion cx;
     private Map<Integer,TupleFilm> allFilms;
 
-    public Film(Connexion cx) throws SQLException {
+    public Film(Connexion cx) throws Tp4Exception {
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
       try {
           allFilms = (Map<Integer,TupleFilm>) cx.getDatabase().getRoot("allFilms");
