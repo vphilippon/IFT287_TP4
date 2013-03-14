@@ -1,6 +1,7 @@
 package tp4;
 
 import com.odi.*;
+import com.odi.util.*;
 import java.util.*;
 
 class GestionSerie {

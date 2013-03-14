@@ -2,6 +2,7 @@ package tp4;
 
 import com.odi.*;
 import java.util.*;
+import com.odi.util.*;
 
 class GestionPersonne {
 
