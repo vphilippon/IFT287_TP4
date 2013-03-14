@@ -1,9 +1,11 @@
 package tp4;
 
-import java.sql.Date;
-import java.sql.SQLException;
+import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
+
+import com.odi.ObjectStore;
+import com.odi.Transaction;
 
 class GestionSerie {
     
@@ -13,12 +15,12 @@ class GestionSerie {
     private RoleEpisode roleEpisode;
     private Connexion cx;
 
-    public GestionSerie(Serie serie, Episode episode, Personne personne, RoleEpisode roleEpisode) throws Tp4Exception{
+    public GestionSerie(Serie serie, Episode episode, Personne personne, RoleEpisode roleEpisode) throws Tp4Exception {
         this.cx = personne.getConnexion();
-        if (cx != serie.getConnexion() || cx != episode.getConnexion() ||
-            cx != personne.getConnexion() || cx != roleEpisode.getConnexion()){
-            throw new Tp4Exception("Les instances de connexions dans GestionPersonne sont différentes");
-        }
+//        if (cx != serie.getConnexion() || cx != episode.getConnexion() ||
+//            cx != personne.getConnexion() || cx != roleEpisode.getConnexion()){
+//            throw new Tp4Exception("Les instances de connexions dans GestionPersonne sont différentes");
+//        }
         this.episode = episode;
         this.personne = personne;
         this.serie = serie;
@@ -26,6 +28,7 @@ class GestionSerie {
     }
 
     public void ajoutSerie(String titre, Date dateSortie, String realisateur) throws Exception {
+        Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
             // Vérifie si le film existe déja 
             if (serie.existe(titre, dateSortie)) {
@@ -43,14 +46,16 @@ class GestionSerie {
             }  
             // Ajout de la serie la table des series
             serie.ajouter(titre, dateSortie, realisateur);
-            cx.commit();
+            tr.commit(ObjectStore.RETAIN_HOLLOW);
         } catch (Exception e) {
-            cx.rollback();
+            tr.abort(ObjectStore.RETAIN_HOLLOW);
             throw e;
         }
     }
     
-    public void ajoutEpisode(String titre, String titreSerie, Date anneeSortieSerie, int noSaison, int noEpisode, String description, Date dateDiffusion) throws Exception {
+    public void ajoutEpisode(String titre, String titreSerie, Date anneeSortieSerie, 
+            int noSaison, int noEpisode, String description, Date dateDiffusion) throws Exception {
+        Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
             // Vérifie si la serie existe
             if (!serie.existe(titreSerie, anneeSortieSerie)) {
@@ -78,15 +83,16 @@ class GestionSerie {
             }
             // Ajout de l'épisode dans la table des épisodes
             episode.ajouter(titre, titreSerie, anneeSortieSerie, noSaison, noEpisode, description, dateDiffusion);
-            cx.commit();
+            tr.commit(ObjectStore.RETAIN_HOLLOW);
         } catch (Exception e) {
-            cx.rollback();
+            tr.abort(ObjectStore.RETAIN_HOLLOW);
             throw e;
         }
     }
     
-    public void ajoutRoleAEpisode(String serieTitre, Date serieDate, int noSaison, int noEpisode, 
-            String acteur, String roleActeur) throws Exception {
+    public void ajoutRoleAEpisode(String serieTitre, Date serieDate, int noSaison, 
+            int noEpisode, String acteur, String roleActeur) throws Exception {
+        Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
             //verifie que la serie existe
             if(!serie.existe(serieTitre, serieDate)){
@@ -119,18 +125,19 @@ class GestionSerie {
             }
             
             roleEpisode.ajouter(serieTitre, serieDate, noSaison, noEpisode, acteur, roleActeur);
-            cx.commit();
+            tr.commit(ObjectStore.RETAIN_HOLLOW);
         } catch (Exception e) {
-            cx.rollback();
+            tr.abort(ObjectStore.RETAIN_HOLLOW);
             throw e;
         }
     }
 
-    public void afficherActeursSerie(String serieTitre, Date serieDate) throws SQLException, Tp4Exception {
+    public void afficherActeursSerie(String serieTitre, Date serieDate) throws Tp4Exception {
+        Transaction tr = Transaction.begin(ObjectStore.READONLY);
         if(!serie.existe(serieTitre, serieDate)){
             throw new Tp4Exception("Impossible d'afficher, la serie " + serieTitre + " paru le " + serieDate + " n'existe pas.");
         }
-        List<TuplePersonne> listeActeurs = personne.acteursDeSerie(serieTitre, serieDate);
+        Set<TuplePersonne> listeActeurs = personne.acteursDeSerie(serieTitre, serieDate);
 
         StringBuilder output = new StringBuilder();
         Iterator<TuplePersonne> it = listeActeurs.iterator();
@@ -139,5 +146,6 @@ class GestionSerie {
         }
         System.out.println("Voici les acteurs de la serie : ");
         System.out.println(output.toString());
+        tr.commit(ObjectStore.RETAIN_HOLLOW);
     }
 }

@@ -22,7 +22,7 @@ public class GestionTp4 {
     public GestionPersonne gestionPersonne;
     public GestionSerie gestionSerie;
     
-    public GestionTp4(String bd) throws Tp4Exception, SQLException{
+    public GestionTp4(String bd) throws Exception{
         cx = new Connexion(bd);
         film = new Film(cx);
         personne = new Personne(cx);

@@ -2,10 +2,8 @@ package tp4;
 
 import com.odi.*;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List; // TEMP
 import java.util.Set;
 
 class GestionPersonne {
@@ -105,13 +103,13 @@ class GestionPersonne {
         tr.commit(ObjectStore.RETAIN_HOLLOW);
     }
 
-    public void afficherFilmDeActeur(String nom) throws Tp4Exception,
-            SQLException {
+    public void afficherFilmDeActeur(String nom) throws Tp4Exception {
+        Transaction tr = Transaction.begin(ObjectStore.READONLY);
         if (!personne.existe(nom)) {
             throw new Tp4Exception("Impossible d'afficher, l'acteur " + nom
                     + " n'existe pas.");
         }
-        List<TupleRoleFilm> tuples = roleFilm.rolesDeActeur(nom);
+        Set<TupleRoleFilm> tuples = roleFilm.rolesDeActeur(nom);
 
         StringBuilder output = new StringBuilder();
         Iterator<TupleRoleFilm> it = tuples.iterator();
@@ -121,15 +119,17 @@ class GestionPersonne {
         }
         System.out.println("L'acteur " + nom + " a participe aux films : ");
         System.out.println(output.toString());
+        tr.commit(ObjectStore.RETAIN_HOLLOW);
     }
 
-    void afficherSerieAvecActeur(String nom) throws Tp4Exception, SQLException {
+    void afficherSerieAvecActeur(String nom) throws Tp4Exception {
+        Transaction tr = Transaction.begin(ObjectStore.READONLY);
         if (!personne.existe(nom)) {
             throw new Tp4Exception("Impossible d'afficher, l'acteur " + nom
                     + " n'existe pas.");
         }
 
-        List<TupleSerie> listeSeries = serie.serieAvecActeur(nom);
+        Set<TupleSerie> listeSeries = serie.serieAvecActeur(nom);
 
         StringBuilder output = new StringBuilder();
         Iterator<TupleSerie> it = listeSeries.iterator();
@@ -139,6 +139,6 @@ class GestionPersonne {
         }
         System.out.println("Voici les series de l'acteur : ");
         System.out.println(output.toString());
-
+        tr.commit(ObjectStore.RETAIN_HOLLOW);
     }
 }

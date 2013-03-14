@@ -1,21 +1,23 @@
 package tp4;
 
-import java.sql.Date;
-import java.sql.SQLException;
+import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
+
+import com.odi.ObjectStore;
+import com.odi.Transaction;
 
 class GestionFilm {
     
     private Film film;
     private Personne personne;
     private RoleFilm roleFilm;
-    private Connexion cx;
+    private Connexion cx;  // NEED?
 
     public GestionFilm(Film film, Personne personne, RoleFilm roleFilm) throws Tp4Exception{
-        if (film.getConnexion() != personne.getConnexion()){
-            throw new Tp4Exception("Connexions différentes dans GestionFilm");
-        }
+//        if (film.getConnexion() != personne.getConnexion()){
+//            throw new Tp4Exception("Connexions différentes dans GestionFilm");
+//        }
         this.cx = film.getConnexion();
         this.film = film;
         this.roleFilm = roleFilm;
@@ -23,6 +25,7 @@ class GestionFilm {
     }
 
     public void ajoutFilm(String titre, Date dateSortie, String realisateur) throws Exception {
+        Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
             // Vérifie si le film existe déja 
             if (film.existe(titre, dateSortie)) {
@@ -39,15 +42,17 @@ class GestionFilm {
                         " et ne peut pas avoir réaliser un film créé le: " + dateSortie);
             }  
             // Ajout du film dans la table des films
-            film.ajouter(titre, dateSortie, realisateur);
-            cx.commit();
+            TupleFilm tFilm = new TupleFilm(titre, dateSortie, "", 0, realisateur);
+            film.ajouter(tFilm);
+            tr.commit(ObjectStore.RETAIN_HOLLOW);
         } catch (Exception e) {
-            cx.rollback();
+            tr.abort(ObjectStore.RETAIN_HOLLOW);
             throw e;
         }
     }
     
     public void supprimerFilm(String titre, Date dateSortie) throws Exception {
+        Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
             // Vérifie si le film existe
             if (!film.existe(titre, dateSortie)) {
@@ -58,40 +63,37 @@ class GestionFilm {
                 throw new Tp4Exception("Impossible de supprimer, le film " + titre + ", un/des role(s) y sont encore rattache.");
             }
             // Supression du film dans la table Film
-            System.out.println(film.enlever(titre, dateSortie) + " film supprimé");
-            cx.commit();
+            TupleFilm t = film.getFilm(titre, dateSortie);
+            int nb = film.enlever(t);
+            tr.commit(ObjectStore.RETAIN_HOLLOW);
+            System.out.println(nb + " film supprimé");
         }
         catch (Exception e)
         {
-            cx.rollback();
+            tr.abort(ObjectStore.RETAIN_HOLLOW);
             throw e;
         }
     }
     
-    /**
-     * 
-     * @param titre
-     * @param anneeSortie
-     * @param description
-     * @param duree 
-     */
     public void ajoutDescFilm(String titre, Date anneeSortie, String description, int duree) throws Exception {
+        Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try{
             //si le film n'existe pas
             if(!film.existe(titre, anneeSortie)){
                 throw new Tp4Exception("Impossible d'ajouter la description, le film " + titre + " paru le " + anneeSortie + " n'existe pas.");
             }
             film.ajouterDescription(titre, anneeSortie, description, duree);
-            cx.commit();
+            tr.commit(ObjectStore.RETAIN_HOLLOW);
         }
         catch(Exception e){
-            cx.rollback();
+            tr.abort(ObjectStore.RETAIN_HOLLOW);
             throw e;
         }
     }
     
     
     public void ajoutActeurFilm(String titre, Date anneeSortie, String nomActeur, String role) throws Exception {
+        Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
             //verifie si l acteur existe
             if (!personne.existe(nomActeur)) {
@@ -121,24 +123,26 @@ class GestionFilm {
             }
 
             roleFilm.ajouter(nomActeur, titre, anneeSortie, role);
-            cx.commit();
+            tr.commit(ObjectStore.RETAIN_HOLLOW);
         } catch (Exception e) {
-            cx.rollback();
+            tr.abort(ObjectStore.RETAIN_HOLLOW);
             throw e;
         }
     }
     
-    public void afficherActeurDeFilm(String titre, Date anneeSortie) throws Tp4Exception, SQLException {
+    public void afficherActeurDeFilm(String titre, Date anneeSortie) throws Tp4Exception {
+        Transaction tr = Transaction.begin(ObjectStore.READONLY);
         if(!film.existe(titre, anneeSortie)){
             throw new Tp4Exception("Le film " + titre + " paru en " + anneeSortie + " n'existe pas.");
         }
         
-        List <TuplePersonne> tuples = roleFilm.getActeurs(titre, anneeSortie);
+        Set <TuplePersonne> tuples = roleFilm.getActeurs(titre, anneeSortie);
         StringBuilder output = new StringBuilder();
         Iterator<TuplePersonne> it = tuples.iterator();
         while(it.hasNext()){
             output.append(it.next().getNom()).append(it.hasNext() ?", ":".");
         }
         System.out.println(output.toString());
+        tr.commit(ObjectStore.RETAIN_HOLLOW);
     }
 }

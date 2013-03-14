@@ -33,14 +33,33 @@ class Film {
     }
 
     public boolean existe(String titre, Date dateSortie) {
-        // TODO Ici ce sera avec une query, les key ne sont pas les bonne
-//        return ("".equals(allFilms.get(titre)) && (allFilms.get(dateSortie) != null));
-        return false;
+        FreeVariables freeV = new FreeVariables();
+        freeV.put("t", String.class);
+        freeV.put("d", Date.class);
+        Query query = new Query(TupleFilm.class, "getTitre() == t && getDateSortie() == d", freeV);
+        FreeVariableBindings freeVB = new FreeVariableBindings();
+        freeVB.put("t", titre);
+        freeVB.put("d", dateSortie);
+        
+        return !(query.select(allFilms.values(), freeVB).isEmpty());
     }
 
     public void ajouter(TupleFilm newFilm) {
         allFilms.put(newFilm.getId(), newFilm);
     }
+    
+    public TupleFilm getFilm(String titre, Date dateSortie) {
+        FreeVariables freeV = new FreeVariables();
+        freeV.put("t", String.class);
+        freeV.put("d", Date.class);
+        Query query = new Query(TupleFilm.class, "getTitre() == t && getDateSortie() == d", freeV);
+        FreeVariableBindings freeVB = new FreeVariableBindings();
+        freeVB.put("t", titre);
+        freeVB.put("d", dateSortie);
+        
+        return (TupleFilm) query.pick(allFilms.values(), freeVB);
+    }
+
 
     public int enlever(TupleFilm t) {
         Object o = allFilms.remove(t.getId());
@@ -51,7 +70,7 @@ class Film {
         }
     }
 
-    // Needed? 
+    // Needed? Don't think so
 //    public TupleFilm rechercher(int id) {
 //        Object o = allFilms.get(id);
 //
@@ -71,7 +90,7 @@ class Film {
         Iterator<TupleFilm> filmIterator = allFilms.values().iterator();
 
         while (filmIterator.hasNext()) {
-//             TODO afficher
+            // TODO afficher
 //            (filmIterator.next()).afficher();
         }
     }
@@ -87,10 +106,10 @@ class Film {
 
     public Set<TupleFilm> filmDeRealisateur(String nom) {
         FreeVariables freeV = new FreeVariables();
-        freeV.put("x", String.class);
-        Query query = new Query(TupleFilm.class, "getRealisateur() == x", freeV);
+        freeV.put("n", String.class);
+        Query query = new Query(TupleFilm.class, "getRealisateur() == n", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
-        freeVB.put("x", nom);
+        freeVB.put("n", nom);
         
         return query.select(allFilms.values(), freeVB);
     }
