@@ -7,10 +7,7 @@ import java.sql.*;
   * alloue les gestionnaires de transactions et de tables.
   * <pre>
   * 
-  * @param serveur SQL
   * @param bd nom de la bade de données
-  * @param user user id pour établir une connexion avec le serveur SQL
-  * @param pwd mot de passe pour le user id
   *</pre>
   */
 public class GestionTp4 {
@@ -25,8 +22,8 @@ public class GestionTp4 {
     public GestionPersonne gestionPersonne;
     public GestionSerie gestionSerie;
     
-    public GestionTp4(String serveur, String bd, String user, String pwd) throws Tp4Exception, SQLException{
-        cx = new Connexion(serveur,bd,user,pwd);
+    public GestionTp4(String bd) throws Tp4Exception, SQLException{
+        cx = new Connexion(bd);
         film = new Film(cx);
         personne = new Personne(cx);
         roleFilm = new RoleFilm(cx);
