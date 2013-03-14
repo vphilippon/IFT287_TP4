@@ -82,7 +82,7 @@ class GestionFilm {
             if(!film.existe(titre, anneeSortie)){
                 throw new Tp4Exception("Impossible d'ajouter la description, le film " + titre + " paru le " + anneeSortie + " n'existe pas.");
             }
-            film.ajouterDescription(titre, anneeSortie, description, duree);
+            film.ajouterDescription(film.getFilm(titre, anneeSortie), description, duree);
             tr.commit(ObjectStore.RETAIN_HOLLOW);
         }
         catch(Exception e){
