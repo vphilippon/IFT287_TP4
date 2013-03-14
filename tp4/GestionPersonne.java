@@ -106,7 +106,7 @@ class GestionPersonne {
         StringBuilder output = new StringBuilder();
         Iterator<TupleRoleFilm> it = tuples.iterator();
         while (it.hasNext()) {
-            output.append(it.next().getFilmTitre()).append(
+            output.append(it.next().getFilm()).append(
                     it.hasNext() ? ", " : ".");
         }
         System.out.println("L'acteur " + nom + " a participe aux films : ");

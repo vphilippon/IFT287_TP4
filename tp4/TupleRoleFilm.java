@@ -29,6 +29,11 @@ public class TupleRoleFilm {
         return this.film;
     }
 
+    public void setFilm(TupleFilm film) {
+        this.film = film;
+    }
+    
+
     public TuplePersonne getNomActeur() {
         return this.nomActeur;
     }
@@ -43,15 +48,5 @@ public class TupleRoleFilm {
 
     public void setRoleActeur(String roleActeur) {
         this.roleActeur = roleActeur;
-    }
-
-    public void setFilmTitre(String filmTitre) {
-        this.filmTitre = filmTitre;
-    }
-
-    public void setAnneeSortie(Date anneeSortie) {
-        this.anneeSortie = anneeSortie;
-    }
-    
-    
+    }  
 }
