@@ -64,20 +64,6 @@ class Film {
         }
     }
 
-    // Needed? Don't think so
-//    public TupleFilm rechercher(int id) {
-//        Object o = allFilms.get(id);
-//
-//        if (o instanceof TupleFilm) {
-//            if (o != null) {
-//                return (TupleFilm) o;
-//            } else {
-//                return null;
-//            }
-//        }
-//        return null;
-//    }
-
     public void listerFilm(String titre, Date dateSortie) {
         System.out.println("Liste des films");
 

@@ -50,9 +50,9 @@ class GestionPersonne {
                         + nom + " n'existe pas.");
             }
 
-            TuplePersonne pers = personne.getPersonne(nom);
             // S'il est le realisateur d'au moins un film
-            if (!film.filmDeRealisateur(nom).isEmpty()) {
+            TuplePersonne pers = personne.getPersonne(nom);
+            if (!film.filmDeRealisateur(pers).isEmpty()) {
                 throw new Tp4Exception("Impossible de supprimer, la personne "
                         + nom + " a realise au moins un film.");
             }
@@ -67,7 +67,7 @@ class GestionPersonne {
                         + nom + " a un role dans au moins un film.");
             }
             // S'il a au moins un role dans au moins un episode d'au moins une serie
-            if (!roleEpisode.rolesDeActeur(nom).isEmpty()) {
+            if (!roleEpisode.rolesDeActeur(pers).isEmpty()) {
                 throw new Tp4Exception("Impossible de supprimer, la personne "
                         + nom + " a un role dans au moins une series.");
             }

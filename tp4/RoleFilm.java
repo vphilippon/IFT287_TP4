@@ -1,37 +1,52 @@
 package tp4;
 
+import com.odi.DatabaseRootNotFoundException;
+import com.odi.ObjectStore;
+import com.odi.Transaction;
+import com.odi.util.OSHashMap;
+import com.odi.util.query.FreeVariableBindings;
+import com.odi.util.query.FreeVariables;
+import com.odi.util.query.Query;
 import java.util.Date;
+import java.util.Map;
 import java.util.Set;
 
 class RoleFilm {
     
-//    private PreparedStatement stmtRoleFilmExiste;
-//    private PreparedStatement stmtRoleFilmExistePourAutreActeur;
-//    private PreparedStatement stmtAjouteoRleFilm;
-//    private PreparedStatement stmtGetActeurOfFilm;
-//    private PreparedStatement stmtGetRoleOfActeur;
+    private Map<Integer,TupleRoleFilm> allRoleFilms;
 
-    public RoleFilm(Connexion cx) {
-        init();
-    }
-    
-    private void init() {
-//        stmtRoleFilmExiste = cx.getConnection().prepareStatement(
-//                "SELECT * FROM RoleFilm WHERE nomActeur = ? AND filmTitre = ?" 
-//                        + " AND anneeSortie = ? AND roleActeur = ?");
-//        stmtRoleFilmExistePourAutreActeur = cx.getConnection().prepareStatement(
-//                "SELECT * FROM RoleFilm WHERE filmTitre = ? AND anneeSortie = ? AND roleActeur = ?");
-//        stmtAjouteoRleFilm = cx.getConnection().prepareStatement(
-//                "INSERT INTO RoleFilm (nomActeur, roleActeur, filmTitre, anneeSortie) VALUES (?, ?, ?, ?)");
-//        stmtGetActeurOfFilm = cx.getConnection().prepareStatement(
-//                "SELECT * FROM Personne WHERE nom IN (SELECT nomActeur FROM RoleFilm" 
-//                        + " WHERE filmTitre = ? AND anneeSortie = ?)");
-//        stmtGetRoleOfActeur = cx.getConnection().prepareStatement(
-//                "SELECT * FROM RoleFilm WHERE nomActeur = ?");
+    public RoleFilm(Connexion cx) throws Exception {
+        Transaction tr = Transaction.begin(ObjectStore.UPDATE);
+        try {
+            try{
+                allRoleFilms = (Map<Integer,TupleRoleFilm>) cx.getDatabase().getRoot("allRoleFilms");
+            } catch(DatabaseRootNotFoundException e) {
+                cx.getDatabase().createRoot("allRoleFilms", allRoleFilms = new OSHashMap<Integer, TupleRoleFilm>(10));
+            }
+            tr.commit(ObjectStore.RETAIN_HOLLOW);
+        } catch(Exception e) {
+            tr.abort(ObjectStore.RETAIN_HOLLOW);
+            throw e;
+        }
     }
 
     public boolean existe(String nomActeur, String filmTitre, Date anneeSortie, String role) {
-        boolean retour = false; // TEMP
+        FreeVariables freeV = new FreeVariables();
+        freeV.put("na", String.class);
+        freeV.put("ft", String.class);
+        freeV.put("as", Date.class);
+        freeV.put("r", String.class);
+        Query query = new Query(TupleRoleFilm.class, "getFilmTitre() == ft && getAnneeSortie() == as && getNomActeur() == na && getRoleActeur() == r", freeV);
+        FreeVariableBindings freeVB = new FreeVariableBindings();
+        freeVB.put("na", nomActeur);
+        freeVB.put("ft", filmTitre);
+        freeVB.put("as", anneeSortie);
+        freeVB.put("r", role);
+        
+        
+        return !(query.select(allRoleFilms.values(), freeVB).isEmpty());
+        
+//        boolean retour = false; // TEMP
 //        stmtRoleFilmExiste.setString(1,nomActeur);
 //        stmtRoleFilmExiste.setString(2,filmTitre);
 //        stmtRoleFilmExiste.setDate(3,anneeSortie);
@@ -39,7 +54,6 @@ class RoleFilm {
 //        ResultSet rs = stmtRoleFilmExiste.executeQuery();
 //        retour = rs.next();
 //        rs.close();
-        return retour;
     }
     
     public boolean existe(String filmTitre, Date anneeSortie, String role) {

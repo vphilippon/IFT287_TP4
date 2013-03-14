@@ -1,62 +1,47 @@
 package tp4;
 
-import java.util.Date;
-import java.util.Set;
+import com.odi.*;
+import com.odi.util.*;
+import com.odi.util.query.*;
+
+import java.util.*;
 
 class Serie {
 
-//    private PreparedStatement stmtSerieExiste;
-//    private PreparedStatement stmtAjouterSerie;
-//    private PreparedStatement stmtSerieDeRealisateur;
-//    private PreparedStatement stmtSerieAvecActeur;
+    private Map<Integer, TupleSerie> allSeries;
     
-    public Serie(Connexion cx) {
-        init();
-    }
-
-    private void init() {
-//        stmtSerieExiste = cx.getConnection().prepareStatement(
-//                "SELECT * FROM Serie WHERE titre = ? AND anneeSortie = ?");
-//        stmtAjouterSerie = cx.getConnection().prepareStatement(
-//                "INSERT INTO Serie (titre, anneeSortie, realisateur, description, nbSaison)" 
-//                        + " VALUES (?, ?, ?, ?, ?)");
-//        stmtSerieDeRealisateur = cx.getConnection().prepareStatement(
-//                "SELECT * FROM Serie WHERE realisateur = ?");
-//        stmtSerieAvecActeur = cx.getConnection().prepareStatement(
-//                "SELECT * FROM Serie WHERE titre IN" 
-//                        + " (SELECT titreSerie FROM RoleEpisode WHERE nomActeur = ?)");
+    public Serie(Connexion cx) throws Exception {
+        
+        Transaction tr = Transaction.begin(ObjectStore.UPDATE);
+        try {
+            try {
+                allSeries = (Map<Integer, TupleSerie>) cx.getDatabase().getRoot("allSeries");
+            } catch (DatabaseRootNotFoundException e) {
+                cx.getDatabase().createRoot("allSeries", allSeries = new OSHashMap<Integer, TupleSerie>(10));
+            }
+            tr.commit(ObjectStore.RETAIN_HOLLOW);
+        } catch (Exception e) {
+            tr.abort(ObjectStore.RETAIN_HOLLOW);
+            throw e;
+        }                                                                                        
     }
 
     public boolean existe(String serieTitre, Date serieDate) {
-        boolean retour = false; // TEMP
-//        stmtSerieExiste.setString(1,serieTitre);
-//        stmtSerieExiste.setDate(2,serieDate);
-//        ResultSet rs = stmtSerieExiste.executeQuery();
-//        retour = rs.next();
-//        rs.close();
-        return retour;
+        
+        FreeVariables freeV = new FreeVariables();
+        freeV.put("t", String.class);
+        freeV.put("d", Date.class);
+        Query query = new Query(TupleSerie.class, "getTitre().equals(t) && getAnneeSortie().equals(d)", freeV);
+        FreeVariableBindings freeVB = new FreeVariableBindings();
+        freeVB.put("t", serieTitre);
+        freeVB.put("d", serieDate); 
+        
+        return !(query.select(allSeries.values(), freeVB).isEmpty());
+        
     }
     
-    // Surcharge de la methode pour garder la possibilité d'ajouter une description
-    // pour une serie et le nbSaison
-    public void ajouter(String titre, Date dateSortie, String realisateur, 
-            String description, int nbSaison) {
-//        stmtAjouterSerie.setString(1, titre);
-//        stmtAjouterSerie.setDate(2, dateSortie);
-//        stmtAjouterSerie.setString(3, realisateur);
-//        stmtAjouterSerie.setString(4, description);
-//        stmtAjouterSerie.setInt(5, nbSaison);
-//        stmtAjouterSerie.executeUpdate();            
-    }
-    
-    // Surcharge de la methode pour respecter les formats d'entree du fichier
-    public void ajouter(String titre, Date dateSortie, String realisateur) {
-//        stmtAjouterSerie.setString(1, titre);
-//        stmtAjouterSerie.setDate(2, dateSortie);
-//        stmtAjouterSerie.setString(3, realisateur);
-//        stmtAjouterSerie.setString(4, ""); //valeur par defaut
-//        stmtAjouterSerie.setInt(5, 1); //valeur par defaut
-//        stmtAjouterSerie.executeUpdate();
+    public void ajouter(TupleSerie newSerie) {
+        allSeries.put(newSerie.getId(), newSerie);
     }
 
     public Set<TupleSerie> serieDeRealisateur(String nom) {
@@ -82,18 +67,16 @@ class Serie {
     }
 
     public TupleSerie getSerie(String titre, Date anneeSortie) {
-        TupleSerie laSerie = null; // TEMP
+
+        FreeVariables freeV = new FreeVariables();
+        freeV.put("t", String.class);
+        freeV.put("d", String.class);
+        Query query = new Query(TupleSerie.class, "getTitre().equals(t) && getAnneeSortie().equals(d)", freeV);
+        FreeVariableBindings freeVB = new FreeVariableBindings();
+        freeVB.put("t", titre);
+        freeVB.put("d", anneeSortie); 
         
-//        stmtSerieExiste.setString(1, titre);
-//        stmtSerieExiste.setDate(2, anneeSortie);
-//        
-//        ResultSet rs = stmtSerieExiste.executeQuery();
-//        rs.next();
-        
-//        laSerie = new TupleSerie(rs.getString("titre"), rs.getDate("anneeSortie"), rs.getString("realisateur"), 
-//                                 rs.getString("description"), rs.getInt("nbSaison"));
-//        rs.close();
-        return laSerie;
+        return (TupleSerie) query.pick(allSeries.values(), freeVB);
     }
 
 }

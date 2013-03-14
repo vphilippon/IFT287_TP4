@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
-
 class GestionSerie {
     
     private Serie serie;
@@ -39,8 +38,10 @@ class GestionSerie {
                 throw new Tp4Exception("Impossible d'ajouter, le réalisateur est né le " + realisateurNaissance + 
                         " et ne peut pas participer à un film créé le: " + dateSortie);
             }  
+            TuplePersonne tRealiasateur = personne.getPersonne(realisateur);
             // Ajout de la serie la table des series
-            serie.ajouter(titre, dateSortie, realisateur);
+            TupleSerie tSerie = new TupleSerie(titre, dateSortie, tRealiasateur, "", 1);
+            serie.ajouter(tSerie);
             tr.commit(ObjectStore.RETAIN_HOLLOW);
         } catch (Exception e) {
             tr.abort(ObjectStore.RETAIN_HOLLOW);
@@ -111,18 +112,20 @@ class GestionSerie {
                 throw new Tp4Exception("Impossible d'ajouter, l'acteur " + acteur + " est né le: " + tupleActeur.getDateNaissance() + 
                         " et ne peut pas participer à une serie créé le: " + serieDate + ".");
             } 
-            //verifie que l acteur n'a pas deja le role
-            if(roleEpisode.existe(serieTitre, serieDate, noSaison, noEpisode, acteur, roleActeur)){
+            //verifie que l'acteur n'a pas deja le role
+            TupleEpisode tEpisode = episode.getEpisode(tSerie, noSaison, noEpisode);
+            if(roleEpisode.existe(tSerie, tEpisode, tupleActeur, roleActeur)){
                 throw new Tp4Exception("Impossible d'ajouter, l'acteur : " + acteur + " joue deja dans l'episode " + 
                         noEpisode + " de la saison " + noSaison + " dans le role de : " + roleActeur + ".");
             }
-            //verifie qu un autre acteur n'a pas deja le role
-            if(roleEpisode.existeRole(serieTitre, serieDate, noSaison, noEpisode, roleActeur)){
+            //verifie qu'un autre acteur n'a pas deja le role
+            if(roleEpisode.existeRole(tSerie, tEpisode, roleActeur)){
                 throw new Tp4Exception("Un autre acteur joue deja le role : " + roleActeur + " dans l'episode " + 
                         noEpisode + " de la saison " + noSaison + ".");
             }
             
-            roleEpisode.ajouter(serieTitre, serieDate, noSaison, noEpisode, acteur, roleActeur);
+            TupleRoleEpisode tRole = new TupleRoleEpisode(tupleActeur, roleActeur, tSerie, tEpisode);
+            roleEpisode.ajouter(tRole);
             tr.commit(ObjectStore.RETAIN_HOLLOW);
         } catch (Exception e) {
             tr.abort(ObjectStore.RETAIN_HOLLOW);
