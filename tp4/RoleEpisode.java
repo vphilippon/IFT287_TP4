@@ -1,86 +1,84 @@
 package tp4;
 
+import com.odi.DatabaseRootNotFoundException;
+import com.odi.ObjectStore;
+import com.odi.Transaction;
+import com.odi.util.OSHashMap;
+import com.odi.util.query.FreeVariableBindings;
+import com.odi.util.query.FreeVariables;
+import com.odi.util.query.Query;
 import java.util.Date;
+import java.util.Map;
 import java.util.Set;
 
 class RoleEpisode {
+    
+    private Map<Integer, TupleRoleEpisode> allRoleEpisodes;
 
 //    private PreparedStatement stmtRoleEpisodeExiste;
 //    private PreparedStatement stmtAjouterRoleEpisode;
 //    private PreparedStatement stmtGetRoleEpisodeWithActeur;
 //    private PreparedStatement stmtRoleEpisodeAutreActeur;
     
-    public RoleEpisode(Connexion cx) {
-        init();
+    public RoleEpisode(Connexion cx) throws Exception {
+        Transaction tr = Transaction.begin(ObjectStore.UPDATE);
+        try {
+            try {
+                allRoleEpisodes = (Map<Integer, TupleRoleEpisode>) cx.getDatabase().getRoot("allRoleEpisodes");
+            } catch (DatabaseRootNotFoundException e) {
+                cx.getDatabase().createRoot("allRoleEpisodes", 
+                        allRoleEpisodes = new OSHashMap<Integer, TupleRoleEpisode>(10));
+            }
+            tr.commit(ObjectStore.RETAIN_HOLLOW);
+        } catch (Exception e) {
+            tr.abort(ObjectStore.RETAIN_HOLLOW);
+            throw e;
+        }
     }
     
-    private void init() {
-//        stmtRoleEpisodeExiste = cx.getConnection().prepareStatement(
-//                "SELECT * FROM RoleEpisode WHERE nomActeur = ? AND roleActeur = ? "
-//                        + "AND titreSerie = ? AND noSaison = ? "
-//                        + "AND noEpisode = ? AND anneeSortieSerie = ?");
-//        stmtRoleEpisodeAutreActeur = cx.getConnection().prepareStatement(
-//                "SELECT * FROM RoleEpisode WHERE roleActeur = ? "
-//                        + "AND titreSerie = ? AND noSaison = ? "
-//                        + "AND noEpisode = ? AND anneeSortieSerie = ?");
-//        stmtAjouterRoleEpisode = cx.getConnection().prepareStatement(
-//                "INSERT INTO RoleEpisode (nomActeur, roleActeur, titreSerie," 
-//                        + " noSaison, noEpisode, anneeSortieSerie)" 
-//                        + " VALUES (?, ?, ?, ?, ?, ?)");
-//        stmtGetRoleEpisodeWithActeur = cx.getConnection().prepareStatement(
-//                "SELECT * FROM RoleEpisode WHERE nomActeur = ?");
+    public boolean existe(TupleSerie serie, TupleEpisode episode, TuplePersonne acteur, String roleActeur) {
+        
+        FreeVariables freeV = new FreeVariables();
+        freeV.put("s", TupleSerie.class);
+        freeV.put("e", TupleEpisode.class);
+        freeV.put("a", TuplePersonne.class);
+        freeV.put("r", String.class);
+        Query query = new Query(TupleRoleEpisode.class, "getSerie() == s && getEpisode() == e && getNomActeur() == a && getRole().equals( r )", freeV);
+        FreeVariableBindings freeVB = new FreeVariableBindings();
+        freeVB.put("s", serie);
+        freeVB.put("e", episode);
+        freeVB.put("a", acteur);
+        freeVB.put("r", roleActeur);
+        
+        return !(query.select(allRoleEpisodes.values(), freeVB).isEmpty());
     }
 
-    public boolean existe(String serieTitre, Date serieDate, int noSaison,
-            int noEpisode, String acteur, String roleActeur) {
-        boolean retour = false; // TEMP
-//        stmtRoleEpisodeExiste.setString(1,acteur);
-//        stmtRoleEpisodeExiste.setString(2,roleActeur);
-//        stmtRoleEpisodeExiste.setString(3,serieTitre);
-//        stmtRoleEpisodeExiste.setInt(4,noSaison);
-//        stmtRoleEpisodeExiste.setInt(5,noEpisode);
-//        stmtRoleEpisodeExiste.setDate(6,serieDate);
-//        ResultSet rs = stmtRoleEpisodeExiste.executeQuery();
-//        retour = rs.next();
-//        rs.close();
-        return retour;
+    public void ajouter(TupleRoleEpisode roleEpisode) {
+        allRoleEpisodes.put(roleEpisode.getId(), roleEpisode);
     }
 
-    public void ajouter(String serieTitre, Date serieDate, int noSaison,
-            int noEpisode, String acteur, String roleActeur) {
-//        stmtAjouterRoleEpisode.setString(1,acteur);
-//        stmtAjouterRoleEpisode.setString(2,roleActeur);
-//        stmtAjouterRoleEpisode.setString(3,serieTitre);
-//        stmtAjouterRoleEpisode.setInt(4,noSaison);
-//        stmtAjouterRoleEpisode.setInt(5,noEpisode);
-//        stmtAjouterRoleEpisode.setDate(6,serieDate);
-//        stmtAjouterRoleEpisode.executeUpdate();
-    }
-
-    public Set<TupleRoleEpisode> rolesDeActeur(String nom) {
-        Set<TupleRoleEpisode> listeRoleEpisode = null; // TEMP
-//        stmtGetRoleEpisodeWithActeur.setString(1, nom);
-//        ResultSet rs = stmtGetRoleEpisodeWithActeur.executeQuery();
-//        while(rs.next()){
-//            listeRoleEpisode.add(new TupleRoleEpisode(rs.getString(1),rs.getString(2),rs.getString(3),
-//                    rs.getString(4),rs.getInt(5),rs.getInt(6),rs.getDate(7)));
-//        }
-//        rs.close();
-        return listeRoleEpisode;
+    public Set<TupleRoleEpisode> rolesDeActeur(TuplePersonne personne) {
+        FreeVariables freeV = new FreeVariables();
+        freeV.put("a", TuplePersonne.class);
+        Query query = new Query(TupleRoleEpisode.class, "getNomActeur() == a", freeV);
+        FreeVariableBindings freeVB = new FreeVariableBindings();
+        freeVB.put("a", personne);
+        
+        return query.select(allRoleEpisodes.values(), freeVB);
     }
     
-    public boolean existeRole(String serieTitre, Date serieDate, int noSaison, 
-            int noEpisode, String roleActeur) {
-        boolean retour = false; // TEMP
-//        stmtRoleEpisodeAutreActeur.setString(1,roleActeur);
-//        stmtRoleEpisodeAutreActeur.setString(2,serieTitre);
-//        stmtRoleEpisodeAutreActeur.setInt(3,noSaison);
-//        stmtRoleEpisodeAutreActeur.setInt(4,noEpisode);
-//        stmtRoleEpisodeAutreActeur.setDate(5,serieDate);
-//        ResultSet rs = stmtRoleEpisodeAutreActeur.executeQuery();
-//        retour = rs.next();
-//        rs.close();
-        return retour;
+    public boolean existeRole(TupleSerie serie, TupleEpisode episode, String roleActeur) {
+        FreeVariables freeV = new FreeVariables();
+        freeV.put("s", TupleSerie.class);
+        freeV.put("e", TupleEpisode.class);
+        freeV.put("r", String.class);
+        Query query = new Query(TupleRoleEpisode.class, "getSerie() == s && getEpisode() == e && getRole().equals(r)", freeV);
+        FreeVariableBindings freeVB = new FreeVariableBindings();
+        freeVB.put("s", serie);
+        freeVB.put("e", episode);
+        freeVB.put("r", roleActeur);
+        
+        return !(query.select(allRoleEpisodes.values(), freeVB).isEmpty());
     }
     
 }
