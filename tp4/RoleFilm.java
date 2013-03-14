@@ -4,10 +4,12 @@ import com.odi.DatabaseRootNotFoundException;
 import com.odi.ObjectStore;
 import com.odi.Transaction;
 import com.odi.util.OSHashMap;
+import com.odi.util.OSHashSet;
 import com.odi.util.query.FreeVariableBindings;
 import com.odi.util.query.FreeVariables;
 import com.odi.util.query.Query;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -84,26 +86,23 @@ class RoleFilm {
         return !(query.select(allRoleFilms.values(), freeVB).isEmpty());
     }
     
-    public Set<TuplePersonne> getActeurs(String titre, Date anneeSortie) {
-        Set<TuplePersonne> listePersonne = null;
-//        stmtGetActeurOfFilm.setString(1,titre);
-//        stmtGetActeurOfFilm.setDate(2,anneeSortie);
-//        ResultSet rs = stmtGetActeurOfFilm.executeQuery();
-//        while(rs.next()){
-//            listePersonne.add(new TuplePersonne(rs.getString(1),rs.getDate(2),rs.getString(3),rs.getInt(4)));
-//        }
-//        rs.close();
-        return listePersonne;
+    public Set<TuplePersonne> getActeurs(TupleFilm tf) {
+        Set<TuplePersonne> listeActeurs = new OSHashSet<TuplePersonne>();
+        Iterator<TupleRoleFilm> roleIterator = allRoleFilms.values().iterator();
+        
+        while(roleIterator.hasNext()) {
+            listeActeurs.add(roleIterator.next().getNomActeur());
+        }
+        return listeActeurs;
     }
 
-    public Set<TupleRoleFilm> rolesDeActeur(String nom) {
-        Set<TupleRoleFilm> listeRole = null;
-//        stmtGetRoleOfActeur.setString(1,nom);
-//        ResultSet rs = stmtGetRoleOfActeur.executeQuery();
-//        while(rs.next()){
-//            listeRole.add(new TupleRoleFilm(rs.getString(1),rs.getString(2),rs.getString(3),rs.getDate(4)));
-//        }
-//        rs.close();
+    public Set<TupleRoleFilm> rolesDeActeur(TuplePersonne tp) {
+        Set<TupleRoleFilm> listeRole = new OSHashSet<TupleRoleFilm>();
+        Iterator<TupleRoleFilm> filmIterator = allRoleFilms.values().iterator();
+        
+        while (filmIterator.hasNext()) {
+            listeRole.add(filmIterator.next());
+        }
         return listeRole;
     }
 }

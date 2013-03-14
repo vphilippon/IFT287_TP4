@@ -33,7 +33,6 @@ public class TupleRoleFilm {
         this.film = film;
     }
     
-
     public TuplePersonne getNomActeur() {
         return this.nomActeur;
     }

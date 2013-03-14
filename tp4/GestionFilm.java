@@ -133,7 +133,7 @@ class GestionFilm {
             throw new Tp4Exception("Le film " + titre + " paru en " + anneeSortie + " n'existe pas.");
         }
         
-        Set <TuplePersonne> tuples = roleFilm.getActeurs(titre, anneeSortie);
+        Set <TuplePersonne> tuples = roleFilm.getActeurs(film.getFilm(titre, anneeSortie));
         StringBuilder output = new StringBuilder();
         Iterator<TuplePersonne> it = tuples.iterator();
         while(it.hasNext()){
