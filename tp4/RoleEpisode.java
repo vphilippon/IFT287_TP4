@@ -90,8 +90,7 @@ class RoleEpisode {
         return listeActeur;
     }
         
-    public Set<TupleSerie> serieAvecActeur(TuplePersonne acteur) {
-        
+    public Set<TupleRoleEpisode> serieAvecActeur(TuplePersonne acteur) {
         
         FreeVariables freeV = new FreeVariables();
         freeV.put("a", acteur);
