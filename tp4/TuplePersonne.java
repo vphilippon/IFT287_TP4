@@ -16,6 +16,22 @@ public class TuplePersonne {
         this.sexe = sexe;
     }
     
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setDateNaissance(Date dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
+
+    public void setLieuNaissance(String lieuNaissance) {
+        this.lieuNaissance = lieuNaissance;
+    }
+
+    public void setSexe(int sexe) {
+        this.sexe = sexe;
+    }
+
     public String getNom() {
         return nom;
     }
