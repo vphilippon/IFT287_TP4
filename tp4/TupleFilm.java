@@ -21,10 +21,6 @@ class TupleFilm
         this.realisateur = realisateur;
     }
     
-    public int getCourantId(){
-        return courantId;
-    }
-    
     public int getId(){
         return this.Id;
     }

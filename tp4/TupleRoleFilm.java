@@ -1,6 +1,5 @@
 package tp4;
 
-import java.util.Date;
 
 public class TupleRoleFilm {
     
@@ -15,10 +14,6 @@ public class TupleRoleFilm {
         this.nomActeur = nomActeur;
         this.roleActeur = roleActeur;
         this.film = film;
-    }
-    
-    public int getCourantId(){
-        return courantId;
     }
     
     public int getId(){

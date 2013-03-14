@@ -18,10 +18,6 @@ public class TupleRoleEpisode {
         this.episode = episode;
     }
 
-    public static int getCourantId() {
-        return courantId;
-    }
-
     public int getId() {
         return Id;
     }
