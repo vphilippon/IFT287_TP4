@@ -1,16 +1,9 @@
 package tp4;
 
-import com.odi.DatabaseRootNotFoundException;
-import com.odi.ObjectStore;
-import com.odi.Transaction;
-import com.odi.util.OSHashMap;
-import com.odi.util.query.FreeVariableBindings;
-import com.odi.util.query.FreeVariables;
-import com.odi.util.query.Query;
-import java.util.Date;
-import java.util.Map;
-import java.util.Iterator;
-import java.util.Set;
+import com.odi.*;
+import com.odi.util.*;
+import com.odi.util.query.*;
+import java.util.*;
 
 import com.odi.util.OSHashSet;
 
@@ -18,6 +11,7 @@ class RoleEpisode {
     
     private Map<Integer, TupleRoleEpisode> allRoleEpisodes;
 
+    @SuppressWarnings("unchecked")
     public RoleEpisode(Connexion cx) throws Exception {
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
@@ -55,6 +49,7 @@ class RoleEpisode {
         allRoleEpisodes.put(roleEpisode.getId(), roleEpisode);
     }
 
+    @SuppressWarnings("unchecked")
     public Set<TupleRoleEpisode> rolesDeActeur(TuplePersonne personne) {
         FreeVariables freeV = new FreeVariables();
         freeV.put("a", TuplePersonne.class);

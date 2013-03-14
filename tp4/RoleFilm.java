@@ -1,22 +1,15 @@
 package tp4;
 
-import com.odi.DatabaseRootNotFoundException;
-import com.odi.ObjectStore;
-import com.odi.Transaction;
-import com.odi.util.OSHashMap;
-import com.odi.util.OSHashSet;
-import com.odi.util.query.FreeVariableBindings;
-import com.odi.util.query.FreeVariables;
-import com.odi.util.query.Query;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import com.odi.*;
+import com.odi.util.*;
+import com.odi.util.query.*;
+import java.util.*;
 
 class RoleFilm {
     
     private Map<Integer,TupleRoleFilm> allRoleFilms;
 
+    @SuppressWarnings("unchecked")
     public RoleFilm(Connexion cx) throws Exception {
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {

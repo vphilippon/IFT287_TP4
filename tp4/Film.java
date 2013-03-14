@@ -3,7 +3,6 @@ package tp4;
 import com.odi.*;
 import com.odi.util.*;
 import com.odi.util.query.*;
-
 import java.util.*;
 
 class Film {
@@ -65,22 +64,11 @@ class Film {
         }
     }
 
-    public void listerFilm(String titre, Date dateSortie) {
-        System.out.println("Liste des films");
-
-        Iterator<TupleFilm> filmIterator = allFilms.values().iterator();
-
-        while (filmIterator.hasNext()) {
-            // TODO afficher
-//            (filmIterator.next()).afficher();
-        }
-    }
-
     public void ajouterDescription(TupleFilm t, String description, int duree) {
         t.setDescription(description);
         t.setDuree(duree);
-        
-        //System.out.println((getFilm(t.getTitre(), t.getDateSortie())).afficher());
+        // TODO Check si fonctionne
+//        System.out.println((getFilm(t.getTitre(), t.getDateSortie())).afficher()); // TODO pour test
         
     }
 

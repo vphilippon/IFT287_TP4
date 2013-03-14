@@ -1,11 +1,7 @@
 package tp4;
 
-import com.odi.ObjectStore;
-import com.odi.Transaction;
-
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Set;
+import com.odi.*;
+import java.util.*;
 
 class GestionSerie {
     

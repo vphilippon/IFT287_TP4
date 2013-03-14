@@ -4,16 +4,16 @@ import java.util.Date;
 
 class TupleEpisode 
 {
-    static private int courantId = 0;
-    private int Id;
+    static private Integer courantId = 0;
+    private Integer Id;
     private String titreEpisode;
     private TupleSerie serie;
-    private int noSaison;
-    private int noEpisode;
+    private Integer noSaison;
+    private Integer noEpisode;
     private String description;
     private Date dateDiffusion;
 
-    public TupleEpisode(String titreEpisode, TupleSerie serie, int noSaison, int noEpisode, String description, Date dateDiffusion) {
+    public TupleEpisode(String titreEpisode, TupleSerie serie, Integer noSaison, Integer noEpisode, String description, Date dateDiffusion) {
         this.Id = ++courantId;
         this.titreEpisode = titreEpisode;
         this.serie = serie;
@@ -23,7 +23,7 @@ class TupleEpisode
         this.dateDiffusion = dateDiffusion;
     }
     
-    public int getId(){
+    public Integer getId(){
         return this.Id;
     }
 
@@ -43,19 +43,19 @@ class TupleEpisode
         this.serie = serie;
     }
 
-    public int getNoSaison() {
+    public Integer getNoSaison() {
         return noSaison;
     }
 
-    public void setNoSaison(int noSaison) {
+    public void setNoSaison(Integer noSaison) {
         this.noSaison = noSaison;
     }
 
-    public int getNoEpisode() {
+    public Integer getNoEpisode() {
         return noEpisode;
     }
 
-    public void setNoEpisode(int noEpisode) {
+    public void setNoEpisode(Integer noEpisode) {
         this.noEpisode = noEpisode;
     }
 
@@ -74,6 +74,4 @@ class TupleEpisode
     public void setDateDiffusion(Date dateDiffusion) {
         this.dateDiffusion = dateDiffusion;
     }
-    
-    
 }

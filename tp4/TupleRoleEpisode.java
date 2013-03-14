@@ -2,8 +2,8 @@ package tp4;
 
 public class TupleRoleEpisode {
     
-    static private int courantId = 0;
-    private int Id;
+    static private Integer courantId = 0;
+    private Integer Id;
     private TuplePersonne nomActeur;
     private String roleActeur;
     private TupleSerie serie;
@@ -18,11 +18,7 @@ public class TupleRoleEpisode {
         this.episode = episode;
     }
 
-    public static int getCourantId() {
-        return courantId;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return Id;
     }
 
@@ -57,8 +53,4 @@ public class TupleRoleEpisode {
     public void setEpisode(TupleEpisode episode) {
         this.episode = episode;
     }
-    
-    
-    
-    
 }

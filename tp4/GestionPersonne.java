@@ -1,10 +1,7 @@
 package tp4;
 
 import com.odi.*;
-
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 class GestionPersonne {
 
@@ -23,7 +20,7 @@ class GestionPersonne {
         this.roleEpisode = roleEpisode;
     }
 
-    public void ajoutPersonne(String nom, Date dateNaissance,
+    public void ajoutPersonne(String nom, Date dateNaissance, 
             String lieuNaissance, int sexe) throws Exception {
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {

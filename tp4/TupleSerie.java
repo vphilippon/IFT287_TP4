@@ -4,16 +4,16 @@ import java.util.Date;
 
 public class TupleSerie {
     
-    static private int courantId = 0;
-    private int Id;
+    static private Integer courantId = 0;
+    private Integer Id;
     private String titre;
     private Date anneeSortie;
     private TuplePersonne realisateur;
     private String description;
-    private int nbSaison;
+    private Integer nbSaison;
 
     public TupleSerie(String titre, Date anneeSortie, TuplePersonne realisateur, 
-            String description, int nbSaison) {
+            String description, Integer nbSaison) {
         this.Id = ++courantId;
         this.titre = titre;
         this.anneeSortie = anneeSortie;
@@ -21,50 +21,48 @@ public class TupleSerie {
         this.description = description;
         this.nbSaison = nbSaison;
     }
-    
-    public int getId(){
-        return this.Id;
+
+    public Integer getId() {
+        return Id;
     }
 
     public String getTitre() {
-        return this.titre;
-    }
-
-    public Date getAnneeSortie() {
-        return this.anneeSortie;
-    }
-
-    public TuplePersonne getRealisateur() {
-        return this.realisateur;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public int getNbSaison() {
-        return this.nbSaison;
+        return titre;
     }
 
     public void setTitre(String titre) {
         this.titre = titre;
     }
 
+    public Date getAnneeSortie() {
+        return anneeSortie;
+    }
+
     public void setAnneeSortie(Date anneeSortie) {
         this.anneeSortie = anneeSortie;
+    }
+
+    public TuplePersonne getRealisateur() {
+        return realisateur;
     }
 
     public void setRealisateur(TuplePersonne realisateur) {
         this.realisateur = realisateur;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setNbSaison(int nbSaison) {
+    public Integer getNbSaison() {
+        return nbSaison;
+    }
+
+    public void setNbSaison(Integer nbSaison) {
         this.nbSaison = nbSaison;
     }
-    
-    
 }

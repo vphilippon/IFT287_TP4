@@ -1,11 +1,8 @@
 package tp4;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Set;
+import com.odi.*;
+import java.util.*;
 
-import com.odi.ObjectStore;
-import com.odi.Transaction;
 
 class GestionFilm {
     

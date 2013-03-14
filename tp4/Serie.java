@@ -3,13 +3,13 @@ package tp4;
 import com.odi.*;
 import com.odi.util.*;
 import com.odi.util.query.*;
-
 import java.util.*;
 
 class Serie {
 
     private Map<Integer, TupleSerie> allSeries;
     
+    @SuppressWarnings("unchecked")
     public Serie(Connexion cx) throws Exception {
         
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);

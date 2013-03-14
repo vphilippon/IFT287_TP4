@@ -1,5 +1,4 @@
 package tp4;
-import java.sql.*;
 
 // Copié du fichier GestionBibliotheque.java fournit sur le site: http://pages.usherbrooke.ca/vducharme/ift287/
 /**
@@ -35,7 +34,7 @@ public class GestionTp4 {
         gestionSerie = new GestionSerie(serie, episode, personne, roleEpisode);
     }
     
-    public void fermer() throws SQLException
+    public void fermer()
     {
         // fermeture de la connexion
         cx.fermer();

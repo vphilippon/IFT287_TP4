@@ -1,11 +1,9 @@
 package tp4;
 
-import java.util.Date;
-
 public class TupleRoleFilm {
     
-    static private int courantId = 0;
-    private int Id;
+    static private Integer courantId = 0;
+    private Integer Id;
     private TuplePersonne nomActeur;
     private String roleActeur;
     private TupleFilm film;
@@ -17,11 +15,7 @@ public class TupleRoleFilm {
         this.film = film;
     }
     
-    public int getCourantId(){
-        return courantId;
-    }
-    
-    public int getId(){
+    public Integer getId(){
         return this.Id;
     }
     

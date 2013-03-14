@@ -2,14 +2,13 @@ package tp4;
 
 import com.odi.*;
 import com.odi.util.*;
-
-import java.util.Map;
-
+import java.util.*;
 
 public class Personne {
 
     private Map<String, TuplePersonne> allPersonnes;
 
+    @SuppressWarnings("unchecked")
     public Personne(Connexion cx) throws Exception {
 
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
