@@ -60,4 +60,34 @@ class TupleEpisode
     public Date getDateDiffusion() {
         return this.dateDiffusion;
     }
+
+    public void setTitreEpisode(String titreEpisode) {
+        this.titreEpisode = titreEpisode;
+    }
+
+    public void setTitreSerie(String titreSerie) {
+        this.titreSerie = titreSerie;
+    }
+
+    public void setDateSortieSerie(Date dateSortieSerie) {
+        this.dateSortieSerie = dateSortieSerie;
+    }
+
+    public void setNoSaison(int noSaison) {
+        this.noSaison = noSaison;
+    }
+
+    public void setNoEpisode(int noEpisode) {
+        this.noEpisode = noEpisode;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDateDiffusion(Date dateDiffusion) {
+        this.dateDiffusion = dateDiffusion;
+    }
+    
+    
 }

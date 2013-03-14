@@ -61,4 +61,34 @@ public class TupleRoleEpisode {
     public Date getAnneeSortieSerie() {
         return this.anneeSortieSerie;
     }
+
+    public void setNomActeur(String nomActeur) {
+        this.nomActeur = nomActeur;
+    }
+
+    public void setRoleActeur(String roleActeur) {
+        this.roleActeur = roleActeur;
+    }
+
+    public void setTitreSerie(String titreSerie) {
+        this.titreSerie = titreSerie;
+    }
+
+    public void setTitreEpisode(String titreEpisode) {
+        this.titreEpisode = titreEpisode;
+    }
+
+    public void setNoSaison(int noSaison) {
+        this.noSaison = noSaison;
+    }
+
+    public void setNoEpisode(int noEpisode) {
+        this.noEpisode = noEpisode;
+    }
+
+    public void setAnneeSortieSerie(Date anneeSortieSerie) {
+        this.anneeSortieSerie = anneeSortieSerie;
+    }
+    
+    
 }

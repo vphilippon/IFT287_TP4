@@ -42,4 +42,22 @@ public class TupleRoleFilm {
     public Date getAnneeSortie() {
         return this.anneeSortie;
     }
+
+    public void setNomActeur(String nomActeur) {
+        this.nomActeur = nomActeur;
+    }
+
+    public void setRoleActeur(String roleActeur) {
+        this.roleActeur = roleActeur;
+    }
+
+    public void setFilmTitre(String filmTitre) {
+        this.filmTitre = filmTitre;
+    }
+
+    public void setAnneeSortie(Date anneeSortie) {
+        this.anneeSortie = anneeSortie;
+    }
+    
+    
 }

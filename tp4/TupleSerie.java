@@ -50,4 +50,26 @@ public class TupleSerie {
     public int getNbSaison() {
         return this.nbSaison;
     }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public void setAnneeSortie(Date anneeSortie) {
+        this.anneeSortie = anneeSortie;
+    }
+
+    public void setRealisateur(String realisateur) {
+        this.realisateur = realisateur;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setNbSaison(int nbSaison) {
+        this.nbSaison = nbSaison;
+    }
+    
+    
 }
