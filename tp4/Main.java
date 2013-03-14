@@ -37,46 +37,7 @@ public class Main {
         }
     }
     
-    static void traiterTransactions(BufferedReader reader) throws Exception {
-            //afficherAide();
-            String transaction = lireTransaction(reader);
-            while (!finTransaction(transaction)) {
-                    /* découpage de la transaction en mots */
-                    StringTokenizer tokenizer = new StringTokenizer(transaction, " ");
-                    if (tokenizer.hasMoreTokens()) {
-                            executerTransaction(tokenizer);
-                    }
-                    transaction = lireTransaction(reader);
-            }
-    }
-    
-    /**
-    * Vérifie si la fin du traitement des transactions est atteinte.
-    */
-    static boolean finTransaction(String transaction) {
-        /* fin de fichier atteinte */
-        if (transaction == null) {
-             return true;
-        }
-
-        StringTokenizer tokenizer = new StringTokenizer(transaction, " ");
-
-        /* ligne ne contenant que des espaces */
-        if (!tokenizer.hasMoreTokens()) {
-             return false;
-        }
         
-        /* commande "exit" */
-        String commande = tokenizer.nextToken();
-        if (commande.equals("exit")) {
-             return true;
-        } else {
-             return false;
-        }
-    }
-    
-    
-    
     /**
      * Decodage et traitement d'une transaction :
      * @throws Exception 
@@ -190,30 +151,42 @@ public class Main {
     static String lireTransaction(BufferedReader reader) throws IOException {
         return reader.readLine();
     }
-
-    /** lecture d'une chaine de caracteres de la transaction entree a l'ecran */
-    static String readString(StringTokenizer tokenizer) throws Exception {
-        if (tokenizer.hasMoreElements()) {
-            return tokenizer.nextToken();
-        } else {
-            throw new Exception("autre parametre attendu");
-        }
-    }
-
-    /**
-     * lecture d'un int java de la transaction entree a l'ecran
-     */
-    static int readInt(StringTokenizer tokenizer) throws Exception {
-        if (tokenizer.hasMoreElements()) {
-            String token = tokenizer.nextToken();
-            try {
-                return Integer.valueOf(token).intValue();
-            } catch (NumberFormatException e) {
-                throw new Exception("Nombre attendu a la place de \"" + token
-                        + "\"");
+    
+    static void traiterTransactions(BufferedReader reader) throws Exception {
+            //afficherAide();
+            String transaction = lireTransaction(reader);
+            while (!finTransaction(transaction)) {
+                    /* découpage de la transaction en mots */
+                    StringTokenizer tokenizer = new StringTokenizer(transaction, " ");
+                    if (tokenizer.hasMoreTokens()) {
+                            executerTransaction(tokenizer);
+                    }
+                    transaction = lireTransaction(reader);
             }
+    }
+    
+    /**
+    * Vérifie si la fin du traitement des transactions est atteinte.
+    */
+    static boolean finTransaction(String transaction) {
+        /* fin de fichier atteinte */
+        if (transaction == null) {
+             return true;
+        }
+
+        StringTokenizer tokenizer = new StringTokenizer(transaction, " ");
+
+        /* ligne ne contenant que des espaces */
+        if (!tokenizer.hasMoreTokens()) {
+             return false;
+        }
+        
+        /* commande "exit" */
+        String commande = tokenizer.nextToken();
+        if (commande.equals("exit")) {
+             return true;
         } else {
-            throw new Exception("autre parametre attendu");
+             return false;
         }
     }
     
