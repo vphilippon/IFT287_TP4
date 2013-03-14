@@ -1,10 +1,10 @@
-package IFT287_TP4.tp4;
+package tp4;
 
-import java.sql.Date;
+import java.util.Date;
 
 class TupleEpisode 
 {
-    static private int superID = 0;
+    static private int courantID = 0;
     private int ID;
     private String titreEpisode;
     private String titreSerie;
@@ -15,7 +15,7 @@ class TupleEpisode
     private Date dateDiffusion;
 
     public TupleEpisode(String titreEpisode, String titreSerie, Date dateSortieSerie, int noSaison, int noEpisode, String description, Date dateDiffusion) {
-        this.ID = ++superID;
+        this.ID = ++courantID;
         this.titreEpisode = titreEpisode;
         this.titreSerie = titreSerie;
         this.dateSortieSerie = dateSortieSerie;
@@ -24,8 +24,8 @@ class TupleEpisode
         this.description = description;
         this.dateSortieSerie = dateSortieSerie;
     }
-    public int getSuperID(){
-        return superID;
+    public int getCourantID(){
+        return courantID;
     }
     
     public int getID(){
