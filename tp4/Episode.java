@@ -1,47 +1,66 @@
 package tp4;
 
-import java.util.Date;
+import java.util.Map;
+
+import com.odi.DatabaseRootNotFoundException;
+import com.odi.ObjectStore;
+import com.odi.Transaction;
+import com.odi.util.OSHashMap;
+import com.odi.util.query.FreeVariableBindings;
+import com.odi.util.query.FreeVariables;
+import com.odi.util.query.Query;
 
 class Episode {
 
-//    private PreparedStatement stmtEpisodeExiste;
-//    private PreparedStatement stmtAjouterEpisode;
+    private Map<Integer, TupleEpisode> allEpisodes;
 
-    public Episode(Connexion cx) {
-        init();
+    public Episode(Connexion cx) throws Exception {
+        Transaction tr = Transaction.begin(ObjectStore.UPDATE);
+        try {
+            try {
+                allEpisodes = (Map<Integer, TupleEpisode>) cx.getDatabase().getRoot("allEpisodes");
+            } catch (DatabaseRootNotFoundException e) {
+                cx.getDatabase().createRoot("allEpisodes", 
+                        allEpisodes = new OSHashMap<Integer, TupleEpisode>(10));
+            }
+            tr.commit(ObjectStore.RETAIN_HOLLOW);
+        } catch (Exception e) {
+            tr.abort(ObjectStore.RETAIN_HOLLOW);
+            throw e;
+        }
     }
 
-    private void init() {
-//        stmtEpisodeExiste = cx.getConnection().prepareStatement(
-//                "SELECT * FROM Episode WHERE titreSerie = ? AND anneeSortieSerie = ?"
-//                        + " AND noSaison = ? AND noEpisode = ?");
-//        stmtAjouterEpisode = cx.getConnection().prepareStatement(
-//                "INSERT INTO Episode (titre, titreSerie, anneeSortieSerie,"
-//                        + " noSaison, noEpisode, description, dateDiffusion)"
-//                        + " VALUES (?, ?, ?, ?, ?, ?, ?)");
+    public boolean existe(TupleSerie serie, Integer noSaison, Integer noEpisode) {
+        FreeVariables freeV = new FreeVariables();
+        freeV.put("ser", TupleSerie.class);
+        freeV.put("sai", Integer.class);
+        freeV.put("no", Integer.class);
+        Query query = new Query(TupleFilm.class, "getSerie() == ser " 
+                + "&& getNoSaison() == sai && getNoEpisode() == no", freeV);
+        FreeVariableBindings freeVB = new FreeVariableBindings();
+        freeVB.put("ser", serie);
+        freeVB.put("sai", noSaison);
+        freeVB.put("no", noEpisode);
+        
+        return !(query.select(allEpisodes.values(), freeVB).isEmpty());
+    }
+    
+    public TupleEpisode getEpisode(TupleSerie serie, Integer noSaison, Integer noEpisode) {
+        FreeVariables freeV = new FreeVariables();
+        freeV.put("ser", TupleSerie.class);
+        freeV.put("sai", Integer.class);
+        freeV.put("no", Integer.class);
+        Query query = new Query(TupleFilm.class, "getSerie() == ser " 
+                + "&& getNoSaison() == sai && getNoEpisode() == no", freeV);
+        FreeVariableBindings freeVB = new FreeVariableBindings();
+        freeVB.put("ser", serie);
+        freeVB.put("sai", noSaison);
+        freeVB.put("no", noEpisode);
+        
+        return (TupleEpisode) query.pick(allEpisodes.values(), freeVB);
     }
 
-    public boolean existe(String serieTitre, Date serieDate, int noSaison, int noEpisode) {
-        boolean episodeExiste = false;  // TEMP
-//        stmtEpisodeExiste.setString(1, serieTitre);
-//        stmtEpisodeExiste.setDate(2, serieDate);
-//        stmtEpisodeExiste.setInt(3, noSaison);
-//        stmtEpisodeExiste.setInt(4, noEpisode);
-//        ResultSet rs = stmtEpisodeExiste.executeQuery();
-//        episodeExiste = rs.next();
-//        rs.close();
-        return episodeExiste;
-    }
-
-    void ajouter(String titre, String titreSerie, Date anneeSortieSerie,
-            int noSaison, int noEpisode, String description, Date dateDiffusion) {
-//        stmtAjouterEpisode.setString(1, titre);
-//        stmtAjouterEpisode.setString(2, titreSerie);
-//        stmtAjouterEpisode.setDate(3, anneeSortieSerie);
-//        stmtAjouterEpisode.setInt(4, noSaison);
-//        stmtAjouterEpisode.setInt(5, noEpisode);
-//        stmtAjouterEpisode.setString(6, description);
-//        stmtAjouterEpisode.setDate(7, dateDiffusion);
-//        stmtAjouterEpisode.executeUpdate();
+    void ajouter(TupleEpisode newEpisode) {
+        allEpisodes.put(newEpisode.getId(), newEpisode);
     }
 }

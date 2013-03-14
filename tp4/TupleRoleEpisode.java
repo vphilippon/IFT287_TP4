@@ -1,7 +1,5 @@
 package tp4;
 
-import java.util.Date;
-
 public class TupleRoleEpisode {
     
     static private int courantId = 0;

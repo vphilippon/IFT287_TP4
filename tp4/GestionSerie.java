@@ -1,11 +1,12 @@
 package tp4;
 
+import com.odi.ObjectStore;
+import com.odi.Transaction;
+
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
-import com.odi.ObjectStore;
-import com.odi.Transaction;
 
 class GestionSerie {
     
@@ -55,8 +56,9 @@ class GestionSerie {
             if (!serie.existe(titreSerie, anneeSortieSerie)) {
                 throw new Tp4Exception("Impossible d'ajouter, la serie " + titreSerie + " paru le " + anneeSortieSerie + " n'existe pas.");
             }
-            //verifie si l episode existe deja
-            if (episode.existe(titreSerie, anneeSortieSerie, noSaison, noEpisode)) {
+            //verifie si l'episode existe deja
+            TupleSerie tSerie = serie.getSerie(titreSerie, anneeSortieSerie);
+            if (episode.existe(tSerie, noSaison, noEpisode)) {
                 throw new Tp4Exception("Impossible d'ajouter, l'episode existe deja: " + titre + " " + dateDiffusion + " saison: " + noSaison + " episode: " + noEpisode);
             } 
             // verifie si le no saison est valide
@@ -71,12 +73,13 @@ class GestionSerie {
             
             // S'assure que l'épisode d'avant existe
             if (noEpisode > 1) {
-                if (!episode.existe(titreSerie, anneeSortieSerie, noSaison, noEpisode-1)){
+                if (!episode.existe(tSerie, noSaison, noEpisode-1)){
                     throw new Tp4Exception("Impossible d'ajouter, l'episode No" + noEpisode + " ne peu etre ajouter car : l'episode No " + (noEpisode-1) + " est manquant.");
                 }
             }
             // Ajout de l'épisode dans la table des épisodes
-            episode.ajouter(titre, titreSerie, anneeSortieSerie, noSaison, noEpisode, description, dateDiffusion);
+            TupleEpisode tEpisode = new TupleEpisode(titre, tSerie, noSaison, noEpisode, description, dateDiffusion);
+            episode.ajouter(tEpisode);
             tr.commit(ObjectStore.RETAIN_HOLLOW);
         } catch (Exception e) {
             tr.abort(ObjectStore.RETAIN_HOLLOW);
@@ -92,8 +95,9 @@ class GestionSerie {
             if(!serie.existe(serieTitre, serieDate)){
                 throw new Tp4Exception("Impossible d'ajouter, la serie : " + serieTitre + " n'existe pas.");
             }
-            //verifie que l episode existe
-            if(!episode.existe(serieTitre, serieDate, noSaison, noEpisode)){
+            //verifie que l'episode existe
+            TupleSerie tSerie = serie.getSerie(serieTitre, serieDate);
+            if(!episode.existe(tSerie, noSaison, noEpisode)){
                 throw new Tp4Exception("Impossible d'ajouter, l'episode no : " + noEpisode + " de la saison : " + noSaison + " n'existe pas.");
             }
             //verifie que l acteur existe
@@ -131,7 +135,8 @@ class GestionSerie {
         if(!serie.existe(serieTitre, serieDate)){
             throw new Tp4Exception("Impossible d'afficher, la serie " + serieTitre + " paru le " + serieDate + " n'existe pas.");
         }
-        Set<TuplePersonne> listeActeurs = personne.acteursDeSerie(serieTitre, serieDate);
+        TupleSerie tSerie = serie.getSerie(serieTitre, serieDate);
+        Set<TuplePersonne> listeActeurs = roleEpisode.acteursDeSerie(tSerie);
 
         StringBuilder output = new StringBuilder();
         Iterator<TuplePersonne> it = listeActeurs.iterator();

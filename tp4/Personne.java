@@ -3,9 +3,7 @@ package tp4;
 import com.odi.*;
 import com.odi.util.*;
 
-import java.util.Date;
 import java.util.Map;
-import java.util.Set;
 
 
 public class Personne {
@@ -48,19 +46,4 @@ public class Personne {
         else
             return 1;
     }
-
-    public Set<TuplePersonne> acteursDeSerie(String serieTitre, Date serieDate) {
-        // TODO à switcher ver RoleEpisode pour itérer, surement
-        Set<TuplePersonne> listeActeur = null; // TEMP;
-//        stmtGetActeurDeSerie.setString(1, serieTitre);
-//        stmtGetActeurDeSerie.setDate(2, serieDate);
-//        ResultSet rs = stmtGetActeurDeSerie.executeQuery();
-//        while (rs.next()) {
-//            listeActeur.add(new TuplePersonne(rs.getString(1), rs.getDate(2),
-//                    rs.getString(3), rs.getInt(4)));
-//        }
-//        rs.close();
-        return listeActeur;
-    }
-
 }

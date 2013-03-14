@@ -126,8 +126,7 @@ class GestionPersonne {
         StringBuilder output = new StringBuilder();
         Iterator<TupleSerie> it = listeSeries.iterator();
         while (it.hasNext()) {
-            output.append(it.next().getTitre()).append(
-                    it.hasNext() ? ", " : ".");
+            output.append(it.next().getTitre()).append(it.hasNext() ? ", " : ".");
         }
         System.out.println("Voici les series de l'acteur : ");
         System.out.println(output.toString());

@@ -23,10 +23,6 @@ class TupleEpisode
         this.dateDiffusion = dateDiffusion;
     }
     
-    public int getCourantId(){
-        return courantId;
-    }
-    
     public int getId(){
         return this.Id;
     }

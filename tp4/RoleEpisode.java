@@ -1,7 +1,10 @@
 package tp4;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Set;
+
+import com.odi.util.OSHashSet;
 
 class RoleEpisode {
 
@@ -81,6 +84,17 @@ class RoleEpisode {
 //        retour = rs.next();
 //        rs.close();
         return retour;
+    }
+    
+    public Set<TuplePersonne> acteursDeSerie(TupleSerie serie) {
+        Set<TuplePersonne> listeActeur = new OSHashSet<TuplePersonne>();
+        Iterator<TupleRoleEpisode> roleIterator = allRoleEpisodes.values().iterator();
+        
+        while(roleIterator.hasNext()){
+            listeActeur.add(roleIterator.next().getNomActeur());
+        }
+
+        return listeActeur;
     }
     
 }

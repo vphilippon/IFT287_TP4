@@ -98,12 +98,12 @@ class Film {
         
     }
 
-    public Set<TupleFilm> filmDeRealisateur(String nom) {
+    public Set<TupleFilm> filmDeRealisateur(TuplePersonne realisateur) {
         FreeVariables freeV = new FreeVariables();
         freeV.put("n", String.class);
         Query query = new Query(TupleFilm.class, "getRealisateur() == n", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
-        freeVB.put("n", nom);
+        freeVB.put("n", realisateur);
         
         return query.select(allFilms.values(), freeVB);
     }
