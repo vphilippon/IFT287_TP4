@@ -1,9 +1,11 @@
 package tp4;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class TupleSerie {
     
+    static private int courantId = 0;
+    private int Id;
     private String titre;
     private Date anneeSortie;
     private String realisateur;
@@ -12,30 +14,62 @@ public class TupleSerie {
 
     public TupleSerie(String titre, Date anneeSortie, String realisateur, 
             String description, int nbSaison) {
+        this.Id = ++courantId;
         this.titre = titre;
         this.anneeSortie = anneeSortie;
         this.realisateur = realisateur;
         this.description = description;
         this.nbSaison = nbSaison;
     }
+    
+    
+    public int getCourantId(){
+        return courantId;
+    }
+    
+    public int getId(){
+        return this.Id;
+    }
 
     public String getTitre() {
-        return titre;
+        return this.titre;
     }
 
     public Date getAnneeSortie() {
-        return anneeSortie;
+        return this.anneeSortie;
     }
 
     public String getRealisateur() {
-        return realisateur;
+        return this.realisateur;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public int getNbSaison() {
-        return nbSaison;
+        return this.nbSaison;
     }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public void setAnneeSortie(Date anneeSortie) {
+        this.anneeSortie = anneeSortie;
+    }
+
+    public void setRealisateur(String realisateur) {
+        this.realisateur = realisateur;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setNbSaison(int nbSaison) {
+        this.nbSaison = nbSaison;
+    }
+    
+    
 }

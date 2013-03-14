@@ -2,6 +2,9 @@ package tp4;
 
 import com.odi.*;
 import com.odi.util.*;
+import com.odi.util.query.FreeVariableBindings;
+import com.odi.util.query.FreeVariables;
+import com.odi.util.query.Query;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,8 +18,8 @@ class Film {
     public Film(Connexion cx) throws Tp4Exception {
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
       try {
-          allFilms = (Map<Integer,TupleFilm>) cx.getDatabase().getRoot("allFilms");
-          }
+           allFilms = (Map<Integer,TupleFilm>) cx.getDatabase().getRoot("allFilms");
+      }
       catch (DatabaseRootNotFoundException e) {
           /* Creation de la racine */
           cx.getDatabase().createRoot("allFilms", allFilms = new OSHashMap<Integer,TupleFilm>(10));
@@ -79,14 +82,20 @@ class Film {
         stmtAjoutDescFilm.executeUpdate();
     }
 
-    public List<TupleFilm> filmDeRealisateur(String nom) throws SQLException {
-        List<TupleFilm> listeFilms = new ArrayList<TupleFilm>();
-        stmtGetFilmFrom.setString(1,nom);
-        ResultSet rs = stmtGetFilmFrom.executeQuery();
-        while(rs.next()){
-            listeFilms.add(new TupleFilm(rs.getString(1),rs.getDate(2),rs.getString(3),rs.getInt(4), rs.getString(5)));
+    public void filmDeRealisateur(String nom) throws SQLException {
+        System.out.println("Liste des livres pour un auteur");
+
+    FreeVariables freeV = new FreeVariables();
+    freeV.put("x", String.class);
+    Query query = new Query(TupleFilm.class, "getFilm() == x", freeV);
+    FreeVariableBindings freeVB = new FreeVariableBindings();
+    freeVB.put("x", nom);
+    Collection<TupleFilm> queryResults = query.select(allFilms.values(), freeVB);
+
+    Iterator<TupleFilm> livreIter = queryResults.iterator();
+
+    while (livreIter.hasNext()) {
+        livreIter.next().afficher();
         }
-        rs.close();
-        return listeFilms;
     }
 }
