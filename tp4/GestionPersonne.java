@@ -121,7 +121,7 @@ class GestionPersonne {
                     + " n'existe pas.");
         }
 
-        Set<TupleSerie> listeSeries = serie.serieAvecActeur(nom);
+        Set<TupleSerie> listeSeries = roleEpisode.serieAvecActeur(nom);
 
         StringBuilder output = new StringBuilder();
         Iterator<TupleSerie> it = listeSeries.iterator();
