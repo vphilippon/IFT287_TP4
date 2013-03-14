@@ -4,8 +4,8 @@ import java.util.Date;
 
 class TupleEpisode 
 {
-    static private int courantID = 0;
-    private int ID;
+    static private int courantId = 0;
+    private int Id;
     private String titreEpisode;
     private String titreSerie;
     private Date dateSortieSerie;
@@ -15,7 +15,7 @@ class TupleEpisode
     private Date dateDiffusion;
 
     public TupleEpisode(String titreEpisode, String titreSerie, Date dateSortieSerie, int noSaison, int noEpisode, String description, Date dateDiffusion) {
-        this.ID = ++courantID;
+        this.Id = ++courantId;
         this.titreEpisode = titreEpisode;
         this.titreSerie = titreSerie;
         this.dateSortieSerie = dateSortieSerie;
@@ -24,12 +24,13 @@ class TupleEpisode
         this.description = description;
         this.dateSortieSerie = dateSortieSerie;
     }
-    public int getCourantID(){
-        return courantID;
+    
+    public int getCourantId(){
+        return courantId;
     }
     
-    public int getID(){
-        return this.ID;
+    public int getId(){
+        return this.Id;
     }
     
     public String getTitreEpisode() {

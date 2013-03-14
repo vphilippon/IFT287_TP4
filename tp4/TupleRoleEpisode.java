@@ -1,8 +1,11 @@
 package tp4;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class TupleRoleEpisode {
+    
+    static private int courantId = 0;
+    private int Id;
     private String nomActeur;
     private String roleActeur;
     private String titreSerie;
@@ -13,6 +16,7 @@ public class TupleRoleEpisode {
     
     public TupleRoleEpisode(String nomActeur, String roleActeur, String titreSerie, 
             String titreEpisode, int noSaison, int noEpisode, Date anneeSortieSerie) {
+        this.Id = ++courantId;
         this.nomActeur = nomActeur;
         this.roleActeur = roleActeur;
         this.titreSerie = titreSerie;
@@ -21,32 +25,40 @@ public class TupleRoleEpisode {
         this.noEpisode = noEpisode;
         this.anneeSortieSerie = anneeSortieSerie;
     }
-
+    
+    public int getCourantId(){
+        return courantId;
+    }
+    
+    public int getId(){
+        return this.Id;
+    }
+    
     public String getNomActeur() {
-        return nomActeur;
+        return this.nomActeur;
     }
 
     public String getRoleActeur() {
-        return roleActeur;
+        return this.roleActeur;
     }
 
     public String getTitreSerie() {
-        return titreSerie;
+        return this.titreSerie;
     }
 
     public String getTitreEpisode() {
-        return titreEpisode;
+        return this.titreEpisode;
     }
 
     public int getNoSaison() {
-        return noSaison;
+        return this.noSaison;
     }
 
     public int getNoEpisode() {
-        return noEpisode;
+        return this.noEpisode;
     }
 
     public Date getAnneeSortieSerie() {
-        return anneeSortieSerie;
+        return this.anneeSortieSerie;
     }
 }
