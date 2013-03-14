@@ -7,22 +7,20 @@ class TupleEpisode
     static private int courantId = 0;
     private int Id;
     private String titreEpisode;
-    private String titreSerie;
-    private Date dateSortieSerie;
+    private TupleSerie serie;
     private int noSaison;
     private int noEpisode;
     private String description;
     private Date dateDiffusion;
 
-    public TupleEpisode(String titreEpisode, String titreSerie, Date dateSortieSerie, int noSaison, int noEpisode, String description, Date dateDiffusion) {
+    public TupleEpisode(String titreEpisode, TupleSerie serie, int noSaison, int noEpisode, String description, Date dateDiffusion) {
         this.Id = ++courantId;
         this.titreEpisode = titreEpisode;
-        this.titreSerie = titreSerie;
-        this.dateSortieSerie = dateSortieSerie;
+        this.serie = serie;
         this.noSaison = noSaison;
         this.noEpisode = noEpisode;
         this.description = description;
-        this.dateSortieSerie = dateSortieSerie;
+        this.dateDiffusion = dateDiffusion;
     }
     
     public int getCourantId(){
@@ -32,57 +30,49 @@ class TupleEpisode
     public int getId(){
         return this.Id;
     }
-    
+
     public String getTitreEpisode() {
-        return this.titreEpisode;
-    }
-
-    public String getTitreSerie() {
-        return this.titreSerie;
-    }
-
-    public Date getDateSortieSerie() {
-        return this.dateSortieSerie;
-    }
-
-    public int getNoSaison() {
-        return this.noSaison;
-    }
-
-    public int getNoEpisode() {
-        return this.noEpisode;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public Date getDateDiffusion() {
-        return this.dateDiffusion;
+        return titreEpisode;
     }
 
     public void setTitreEpisode(String titreEpisode) {
         this.titreEpisode = titreEpisode;
     }
 
-    public void setTitreSerie(String titreSerie) {
-        this.titreSerie = titreSerie;
+    public TupleSerie getSerie() {
+        return serie;
     }
 
-    public void setDateSortieSerie(Date dateSortieSerie) {
-        this.dateSortieSerie = dateSortieSerie;
+    public void setSerie(TupleSerie serie) {
+        this.serie = serie;
+    }
+
+    public int getNoSaison() {
+        return noSaison;
     }
 
     public void setNoSaison(int noSaison) {
         this.noSaison = noSaison;
     }
 
+    public int getNoEpisode() {
+        return noEpisode;
+    }
+
     public void setNoEpisode(int noEpisode) {
         this.noEpisode = noEpisode;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getDateDiffusion() {
+        return dateDiffusion;
     }
 
     public void setDateDiffusion(Date dateDiffusion) {
