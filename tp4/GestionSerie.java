@@ -38,8 +38,10 @@ class GestionSerie {
                 throw new Tp4Exception("Impossible d'ajouter, le réalisateur est né le " + realisateurNaissance + 
                         " et ne peut pas participer à un film créé le: " + dateSortie);
             }  
+            TuplePersonne tRealiasateur = personne.getPersonne(realisateur);
             // Ajout de la serie la table des series
-            serie.ajouter(titre, dateSortie, realisateur);
+            TupleSerie tSerie = new TupleSerie(titre, dateSortie, tRealiasateur, "", 1);
+            serie.ajouter(tSerie);
             tr.commit(ObjectStore.RETAIN_HOLLOW);
         } catch (Exception e) {
             tr.abort(ObjectStore.RETAIN_HOLLOW);

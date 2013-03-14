@@ -22,11 +22,6 @@ public class TupleSerie {
         this.nbSaison = nbSaison;
     }
     
-    
-    public int getCourantId(){
-        return courantId;
-    }
-    
     public int getId(){
         return this.Id;
     }
