@@ -95,13 +95,13 @@ class Film {
         }
     }
 
-    public void ajouterDescription(String titre, Date anneeSortie, String description, int duree) {
-        // TODO Stuff ici
-//        stmtAjoutDescFilm.setString(1, description);
-//        stmtAjoutDescFilm.setInt(2, duree);
-//        stmtAjoutDescFilm.setString(3, titre);
-//        stmtAjoutDescFilm.setDate(4, anneeSortie);
-//        stmtAjoutDescFilm.executeUpdate();
+    public void ajouterDescription(TupleFilm t, String description, int duree) {
+        t.setDescription(description);
+        t.setDuree(duree);
+        
+        TupleFilm tmp = getFilm(t.getTitre(), t.getDateSortie());
+        //tmp.afficher();
+        
     }
 
     public Set<TupleFilm> filmDeRealisateur(String nom) {
