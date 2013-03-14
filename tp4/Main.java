@@ -19,16 +19,16 @@ public class Main {
 
     private static GestionTp4 gestionTp4;
 
-    public static void main(String argv[]) throws Exception {
-        if (argv.length < 1) {
-                System.out.println("Usage: java biblioOS.Biblio <bd>.odb [<fichier-transactions>]");
+    public static void main(String args[]) throws Exception {
+        if (args.length < 1) {
+                System.out.println("Usage: java <bd>.odb [<fichier-transactions>]");
                 return;
         }
         
         try {
-            InputStream sourceTransaction = new FileInputStream(argv[1]);
+            InputStream sourceTransaction = new FileInputStream(args[1]);
             BufferedReader reader = new BufferedReader(new InputStreamReader(sourceTransaction));
-            gestionTp4 = new GestionTp4(argv[0]);
+            gestionTp4 = new GestionTp4(args[0]);
             traiterTransactions(reader);
         } catch (Exception e) {
             e.printStackTrace(System.out);
