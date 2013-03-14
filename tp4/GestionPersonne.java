@@ -54,7 +54,7 @@ class GestionPersonne {
                         + nom + " a realise au moins un film.");
             }
             // S'il est le realisateur d'au moins une serie
-            if (!serie.serieDeRealisateur(nom).isEmpty()) {
+            if (!serie.serieDeRealisateur(personne.getPersonne(nom)).isEmpty()) {
                 throw new Tp4Exception("Impossible de supprimer, la personne "
                         + nom + " a realise au moins une serie.");
             }
@@ -118,12 +118,12 @@ class GestionPersonne {
                     + " n'existe pas.");
         }
 
-        Set<TupleSerie> listeSeries = serie.serieAvecActeur(nom);
+        Set<TupleRoleEpisode> listeRoleEpisode = roleEpisode.serieAvecActeur(personne.getPersonne(nom));
 
         StringBuilder output = new StringBuilder();
-        Iterator<TupleSerie> it = listeSeries.iterator();
+        Iterator<TupleRoleEpisode> it = listeRoleEpisode.iterator();
         while (it.hasNext()) {
-            output.append(it.next().getTitre()).append(it.hasNext() ? ", " : ".");
+            output.append(it.next().getSerie().getTitre()).append(it.hasNext() ? ", " : ".");
         }
         System.out.println("Voici les series de l'acteur : ");
         System.out.println(output.toString());

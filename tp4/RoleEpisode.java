@@ -84,5 +84,16 @@ class RoleEpisode {
 
         return listeActeur;
     }
+        
+    public Set<TupleRoleEpisode> serieAvecActeur(TuplePersonne acteur) {
+        
+        FreeVariables freeV = new FreeVariables();
+        freeV.put("a", acteur);
+        Query query = new Query(TupleRoleEpisode.class, "getNomActeur() == a", freeV);
+        FreeVariableBindings freeVB = new FreeVariableBindings();
+        freeVB.put("a", acteur);
+        
+        return query.select(allRoleEpisodes.values(), freeVB);
+    }
     
 }
