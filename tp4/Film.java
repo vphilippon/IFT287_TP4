@@ -26,11 +26,11 @@ class Film {
         }
     }
 
-    public boolean existe(String titre, Date dateSortie) {
+    public boolean existe(String titre, OSDate dateSortie) {
         FreeVariables freeV = new FreeVariables();
         freeV.put("t", String.class);
-        freeV.put("d", Date.class);
-        Query query = new Query(TupleFilm.class, "getTitre() == t && getDateSortie() == d", freeV);
+        freeV.put("d", OSDate.class);
+        Query query = new Query(TupleFilm.class, "getTitre() == t && getOSDateSortie() == d", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
         freeVB.put("t", titre);
         freeVB.put("d", dateSortie);
@@ -42,11 +42,11 @@ class Film {
         allFilms.put(newFilm.getId(), newFilm);
     }
     
-    public TupleFilm getFilm(String titre, Date dateSortie) {
+    public TupleFilm getFilm(String titre, OSDate dateSortie) {
         FreeVariables freeV = new FreeVariables();
         freeV.put("t", String.class);
-        freeV.put("d", Date.class);
-        Query query = new Query(TupleFilm.class, "getTitre() == t && getDateSortie() == d", freeV);
+        freeV.put("d", OSDate.class);
+        Query query = new Query(TupleFilm.class, "getTitre() == t && getOSDateSortie() == d", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
         freeVB.put("t", titre);
         freeVB.put("d", dateSortie);

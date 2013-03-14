@@ -1,6 +1,6 @@
 package tp4;
 
-import java.util.Date;
+import com.odi.util.*;
 
 class TupleEpisode 
 {
@@ -11,9 +11,9 @@ class TupleEpisode
     private Integer noSaison;
     private Integer noEpisode;
     private String description;
-    private Date dateDiffusion;
+    private OSDate dateDiffusion;
 
-    public TupleEpisode(String titreEpisode, TupleSerie serie, Integer noSaison, Integer noEpisode, String description, Date dateDiffusion) {
+    public TupleEpisode(String titreEpisode, TupleSerie serie, int noSaison, int noEpisode, String description, OSDate dateDiffusion) {
         this.Id = ++courantId;
         this.titreEpisode = titreEpisode;
         this.serie = serie;
@@ -67,11 +67,11 @@ class TupleEpisode
         this.description = description;
     }
 
-    public Date getDateDiffusion() {
+    public OSDate getDateDiffusion() {
         return dateDiffusion;
     }
 
-    public void setDateDiffusion(Date dateDiffusion) {
+    public void setDateDiffusion(OSDate dateDiffusion) {
         this.dateDiffusion = dateDiffusion;
     }
 }

@@ -11,9 +11,10 @@ package tp4;
  * 
  */
 
+import com.odi.util.OSDate;
 import java.io.*;
-import java.text.ParseException;
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -194,22 +195,30 @@ public class Main {
     /**
     * lecture d'une date en format YYYY-MM-DD
     */
-    static Date readDate(StringTokenizer tokenizer) throws Exception {
-        if (tokenizer.hasMoreElements()) {
-            String token = tokenizer.nextToken();
+    static OSDate readDate(StringTokenizer tokenizer) throws Exception {
+        if(tokenizer.hasMoreElements()){
+                String token = tokenizer.nextToken();
+                try {
+                        OSDate osdate = new OSDate();
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        GregorianCalendar GC = new GregorianCalendar();
+                        GC.setTime(sdf.parse(token));
 
-            try {
-                Date dt = new Date(FormatDate.convertirDate(token).getTime());
-                return dt;
-            } catch (ParseException e) {
-                throw new Tp4Exception("Date en format YYYY-MM-DD attendue à la place  de \"" +
-                  token + "\"");
-            }
-            
-        } else {
-            throw new Exception("autre parametre attendu");
-        }
+                        //
+                        osdate.setYear(GC.get(GregorianCalendar.YEAR)-1900);
+                        osdate.setMonth(GC.get(GregorianCalendar.MONTH));
+                        osdate.setDate(GC.get(GregorianCalendar.DATE));
+
+
+                        return osdate;
+                } catch(IllegalArgumentException e) 
+                {
+                        throw new Exception("Date dans un format invalide - \"" + token + "\"");
+                }
+        } else
+                throw new Exception("autre parametre attendu");
     }
+
     
     /** lecture d'une chaine de caracteres de la transaction entree a l'ecran */
     static String readString(StringTokenizer tokenizer) throws Exception {

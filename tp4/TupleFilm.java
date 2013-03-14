@@ -1,18 +1,18 @@
 package tp4;
 
-import java.util.Date;
+import com.odi.util.*;
 
 class TupleFilm 
 {
     static private Integer courantId = 0;
     private Integer Id;
     private String titre;
-    private Date dateSortie;
+    private OSDate dateSortie;
     private String description;
     private Integer duree;
     private TuplePersonne realisateur;
 
-    public TupleFilm(String titre, Date dateSortie, String description, Integer duree, TuplePersonne realisateur) {
+    public TupleFilm(String titre, OSDate dateSortie, String description, int duree, TuplePersonne realisateur) {
         this.Id = ++courantId;
         this.titre = titre;
         this.dateSortie = dateSortie;
@@ -29,11 +29,11 @@ class TupleFilm
         this.titre = titre;
     }
 
-    public Date getDateSortie() {
+    public OSDate getDateSortie() {
         return dateSortie;
     }
 
-    public void setDateSortie(Date dateSortie) {
+    public void setDateSortie(OSDate dateSortie) {
         this.dateSortie = dateSortie;
     }
 
