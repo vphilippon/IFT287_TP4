@@ -208,6 +208,32 @@ public class Main {
             throw new Tp4Exception("autre paramètre attendu");
         }
     }
+    
+    /** lecture d'une chaine de caracteres de la transaction entree a l'ecran */
+    static String readString(StringTokenizer tokenizer) throws Exception {
+        if (tokenizer.hasMoreElements()) {
+            return tokenizer.nextToken();
+        } else {
+            throw new Exception("autre parametre attendu");
+        }
+    }
+
+    /**
+     * lecture d'un int java de la transaction entree a l'ecran
+     */
+    static int readInt(StringTokenizer tokenizer) throws Exception {
+        if (tokenizer.hasMoreElements()) {
+            String token = tokenizer.nextToken();
+            try {
+                return Integer.valueOf(token).intValue();
+            } catch (NumberFormatException e) {
+                throw new Exception("Nombre attendu a la place de \"" + token
+                        + "\"");
+            }
+        } else {
+            throw new Exception("autre parametre attendu");
+        }
+    }
 /* Not sure if needed
     static Date readDate(StringTokenizer tokenizer) throws Exception {
         if (tokenizer.hasMoreElements()) {
