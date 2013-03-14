@@ -1,15 +1,14 @@
 package tp4;
-
-import java.util.Date;
+import com.odi.util.*;
 
 public class TuplePersonne {
     
     private String nom;
-    private Date dateNaissance;
+    private OSDate dateNaissance;
     private String lieuNaissance;
     private int sexe;
     
-    public TuplePersonne(String nom, Date dateNaissance, String lieuNaissance, int sexe){
+    public TuplePersonne(String nom, OSDate dateNaissance, String lieuNaissance, int sexe){
         this.nom = nom;
         this.dateNaissance = dateNaissance;
         this.lieuNaissance = lieuNaissance;
@@ -20,7 +19,7 @@ public class TuplePersonne {
         this.nom = nom;
     }
 
-    public void setDateNaissance(Date dateNaissance) {
+    public void setOSDateNaissance(OSDate dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 
@@ -36,7 +35,7 @@ public class TuplePersonne {
         return nom;
     }
     
-    public Date getDateNaissance() {
+    public OSDate getDateNaissance() {
         return dateNaissance;
     }
     

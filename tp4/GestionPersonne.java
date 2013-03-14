@@ -1,8 +1,7 @@
 package tp4;
 
 import com.odi.*;
-
-import java.util.Date;
+import com.odi.util.*;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -23,7 +22,7 @@ class GestionPersonne {
         this.roleEpisode = roleEpisode;
     }
 
-    public void ajoutPersonne(String nom, Date dateNaissance,
+    public void ajoutPersonne(String nom, OSDate dateNaissance,
             String lieuNaissance, int sexe) throws Exception {
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
@@ -57,7 +56,7 @@ class GestionPersonne {
                         + nom + " a realise au moins un film.");
             }
             // S'il est le realisateur d'au moins une serie
-            if (!serie.serieDeRealisateur(personne.getPersonne(nom)).isEmpty()) {
+            if (!serie.serieDeRealisateur(nom).isEmpty()) {
                 throw new Tp4Exception("Impossible de supprimer, la personne "
                         + nom + " a realise au moins une serie.");
             }
@@ -121,12 +120,12 @@ class GestionPersonne {
                     + " n'existe pas.");
         }
 
-        Set<TupleRoleEpisode> listeRoleEpisode = roleEpisode.serieAvecActeur(personne.getPersonne(nom));
+        Set<TupleSerie> listeSeries = serie.serieAvecActeur(nom);
 
         StringBuilder output = new StringBuilder();
-        Iterator<TupleRoleEpisode> it = listeRoleEpisode.iterator();
+        Iterator<TupleSerie> it = listeSeries.iterator();
         while (it.hasNext()) {
-            output.append(it.next().getSerie().getTitre()).append(it.hasNext() ? ", " : ".");
+            output.append(it.next().getTitre()).append(it.hasNext() ? ", " : ".");
         }
         System.out.println("Voici les series de l'acteur : ");
         System.out.println(output.toString());

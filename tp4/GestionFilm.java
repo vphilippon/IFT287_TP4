@@ -1,6 +1,6 @@
 package tp4;
 
-import java.util.Date;
+import com.odi.util.*;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -20,7 +20,7 @@ class GestionFilm {
         this.personne = personne;
     }
 
-    public void ajoutFilm(String titre, Date dateSortie, String realisateur) throws Exception {
+    public void ajoutFilm(String titre, OSDate dateSortie, String realisateur) throws Exception {
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
             // Vérifie si le film existe déja 
@@ -31,9 +31,9 @@ class GestionFilm {
             if (!personne.existe(realisateur)){
                 throw new Tp4Exception("Impossible d'ajouter, le réalisateur " + realisateur + " n'existe pas.");
             }
-            Date realisateurNaissance = personne.getPersonne(realisateur).getDateNaissance();
+            OSDate realisateurNaissance = personne.getPersonne(realisateur).getDateNaissance();
             // S'assure que le réalisateur est né avant la sortie du film
-            if (realisateurNaissance.after(dateSortie)){
+            if (realisateurNaissance.getTime() > dateSortie.getTime()){
                 throw new Tp4Exception("Le réalisateur " + realisateur + " est né le: " + realisateurNaissance + 
                         " et ne peut pas avoir réaliser un film créé le: " + dateSortie);
             }  
@@ -48,7 +48,7 @@ class GestionFilm {
         }
     }
     
-    public void supprimerFilm(String titre, Date dateSortie) throws Exception {
+    public void supprimerFilm(String titre, OSDate dateSortie) throws Exception {
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
             // Vérifie si le film existe
@@ -72,7 +72,7 @@ class GestionFilm {
         }
     }
     
-    public void ajoutDescFilm(String titre, Date anneeSortie, String description, int duree) throws Exception {
+    public void ajoutDescFilm(String titre, OSDate anneeSortie, String description, int duree) throws Exception {
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try{
             //si le film n'existe pas
@@ -89,7 +89,7 @@ class GestionFilm {
     }
     
     
-    public void ajoutActeurFilm(String titre, Date anneeSortie, String nomActeur, String role) throws Exception {
+    public void ajoutActeurFilm(String titre, OSDate anneeSortie, String nomActeur, String role) throws Exception {
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
             //verifie si l acteur existe
@@ -104,7 +104,7 @@ class GestionFilm {
             
             //verifie que l'acteur est nee avant la sortie du film
             TuplePersonne acteur = personne.getPersonne(nomActeur);
-            if(acteur.getDateNaissance().after(anneeSortie)){
+            if(acteur.getDateNaissance().getTime() > anneeSortie.getTime()){
                 throw new Tp4Exception("Impossible d'ajouter l'acteur au film, l'acteur " + nomActeur + " est nee avant la date de sortie du film.");
             }
             
@@ -127,7 +127,7 @@ class GestionFilm {
         }
     }
     
-    public void afficherActeurDeFilm(String titre, Date anneeSortie) throws Tp4Exception {
+    public void afficherActeurDeFilm(String titre, OSDate anneeSortie) throws Tp4Exception {
         Transaction tr = Transaction.begin(ObjectStore.READONLY);
         if(!film.existe(titre, anneeSortie)){
             throw new Tp4Exception("Le film " + titre + " paru en " + anneeSortie + " n'existe pas.");

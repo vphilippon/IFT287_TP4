@@ -3,7 +3,6 @@ package tp4;
 import com.odi.*;
 import com.odi.util.*;
 import com.odi.util.query.*;
-
 import java.util.*;
 
 class Film {
@@ -26,11 +25,11 @@ class Film {
         }
     }
 
-    public boolean existe(String titre, Date dateSortie) {
+    public boolean existe(String titre, OSDate dateSortie) {
         FreeVariables freeV = new FreeVariables();
         freeV.put("t", String.class);
-        freeV.put("d", Date.class);
-        Query query = new Query(TupleFilm.class, "getTitre() == t && getDateSortie() == d", freeV);
+        freeV.put("d", OSDate.class);
+        Query query = new Query(TupleFilm.class, "getTitre() == t && getOSDateSortie() == d", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
         freeVB.put("t", titre);
         freeVB.put("d", dateSortie);
@@ -42,11 +41,11 @@ class Film {
         allFilms.put(newFilm.getId(), newFilm);
     }
     
-    public TupleFilm getFilm(String titre, Date dateSortie) {
+    public TupleFilm getFilm(String titre, OSDate dateSortie) {
         FreeVariables freeV = new FreeVariables();
         freeV.put("t", String.class);
-        freeV.put("d", Date.class);
-        Query query = new Query(TupleFilm.class, "getTitre() == t && getDateSortie() == d", freeV);
+        freeV.put("d", OSDate.class);
+        Query query = new Query(TupleFilm.class, "getTitre() == t && getOSDateSortie() == d", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
         freeVB.put("t", titre);
         freeVB.put("d", dateSortie);
@@ -64,7 +63,7 @@ class Film {
         }
     }
 
-    public void listerFilm(String titre, Date dateSortie) {
+    public void listerFilm(String titre, OSDate dateSortie) {
         System.out.println("Liste des films");
 
         Iterator<TupleFilm> filmIterator = allFilms.values().iterator();
@@ -79,7 +78,7 @@ class Film {
         t.setDescription(description);
         t.setDuree(duree);
         
-        //System.out.println((getFilm(t.getTitre(), t.getDateSortie())).afficher());
+        //System.out.println((getFilm(t.getTitre(), t.getOSDateSortie())).afficher());
         
     }
 

@@ -1,18 +1,18 @@
 package tp4;
 
-import java.util.Date;
+import com.odi.util.*;
 
 public class TupleSerie {
     
     static private int courantId = 0;
     private int Id;
     private String titre;
-    private Date anneeSortie;
+    private OSDate anneeSortie;
     private TuplePersonne realisateur;
     private String description;
     private int nbSaison;
 
-    public TupleSerie(String titre, Date anneeSortie, TuplePersonne realisateur, 
+    public TupleSerie(String titre, OSDate anneeSortie, TuplePersonne realisateur, 
             String description, int nbSaison) {
         this.Id = ++courantId;
         this.titre = titre;
@@ -30,7 +30,7 @@ public class TupleSerie {
         return this.titre;
     }
 
-    public Date getAnneeSortie() {
+    public OSDate getAnneeSortie() {
         return this.anneeSortie;
     }
 
@@ -50,7 +50,7 @@ public class TupleSerie {
         this.titre = titre;
     }
 
-    public void setAnneeSortie(Date anneeSortie) {
+    public void setAnneeSortie(OSDate anneeSortie) {
         this.anneeSortie = anneeSortie;
     }
 
