@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 class Episode {
 
-    // Pas de TupleEpisode nécéssaire
     private Connexion cx;
     private PreparedStatement stmtEpisodeExiste;
     private PreparedStatement stmtAjouterEpisode;

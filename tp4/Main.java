@@ -13,6 +13,7 @@ package tp4;
 
 import java.io.*;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -193,19 +194,20 @@ public class Main {
     /**
     * lecture d'une date en format YYYY-MM-DD
     */
-    static String readDate(StringTokenizer tokenizer) throws Tp4Exception {
+    static Date readDate(StringTokenizer tokenizer) throws Exception {
         if (tokenizer.hasMoreElements()) {
             String token = tokenizer.nextToken();
+
             try {
-                FormatDate.convertirDate(token);
-                return token;
+                Date dt = new Date(FormatDate.convertirDate(token).getTime());
+                return dt;
             } catch (ParseException e) {
-                throw new Tp4Exception(
-                            "Date en format YYYY-MM-DD attendue à la place  de \""
-                            + token + "\"");
+                throw new Tp4Exception("Date en format YYYY-MM-DD attendue à la place  de \"" +
+                  token + "\"");
             }
+            
         } else {
-            throw new Tp4Exception("autre paramètre attendu");
+            throw new Exception("autre parametre attendu");
         }
     }
     
