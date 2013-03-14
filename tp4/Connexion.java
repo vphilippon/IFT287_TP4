@@ -3,25 +3,13 @@ package tp4;
 import com.odi.*;
 
 /**
- * Gestionnaire d'une connexion avec une BD relationnelle via JDBC.
+ * Gestionnaire d'une connexion avec une BD via Object Store.
  * 
  * <pre>
  * Marc Frappier - 83 427 378
  * Universite de Sherbrooke
- * version 2.0 - 13 novembre 2004
- * ift287 - exploitation de bases de donnees
  * 
- * Modifie par Vincent Ducharme - 30 janvier 2013
- * 
- * Ce programme permet d'ouvrir une connexion avec une BD via JDBC.
- * La methode serveursSupportes() indique les serveurs supportes.
- * 
- * Pre-condition
- *   le driver JDBC approprie doit etre accessible.
- * 
- * Post-condition
- *   la connexion est ouverte en mode autocommit false et serialisable, 
- *   (s'il est supporte par le serveur).
+ * Modifier par Mathieu Larocque
  * </pre>
  */
 public class Connexion {
