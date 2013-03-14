@@ -8,11 +8,11 @@ public class TupleSerie {
     private int Id;
     private String titre;
     private Date anneeSortie;
-    private String realisateur;
+    private TuplePersonne realisateur;
     private String description;
     private int nbSaison;
 
-    public TupleSerie(String titre, Date anneeSortie, String realisateur, 
+    public TupleSerie(String titre, Date anneeSortie, TuplePersonne realisateur, 
             String description, int nbSaison) {
         this.Id = ++courantId;
         this.titre = titre;
@@ -39,7 +39,7 @@ public class TupleSerie {
         return this.anneeSortie;
     }
 
-    public String getRealisateur() {
+    public TuplePersonne getRealisateur() {
         return this.realisateur;
     }
 
@@ -59,7 +59,7 @@ public class TupleSerie {
         this.anneeSortie = anneeSortie;
     }
 
-    public void setRealisateur(String realisateur) {
+    public void setRealisateur(TuplePersonne realisateur) {
         this.realisateur = realisateur;
     }
 

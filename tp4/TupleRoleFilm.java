@@ -6,12 +6,12 @@ public class TupleRoleFilm {
     
     static private int courantId = 0;
     private int Id;
-    private String nomActeur;
+    private TuplePersonne nomActeur;
     private String roleActeur;
     private String filmTitre;
     private Date anneeSortie;
     
-    TupleRoleFilm(String nomActeur, String roleActeur, String filmTitre, Date anneeSortie) {
+    TupleRoleFilm(TuplePersonne nomActeur, String roleActeur, String filmTitre, Date anneeSortie) {
         this.Id = ++courantId;
         this.nomActeur = nomActeur;
         this.roleActeur = roleActeur;
@@ -31,7 +31,7 @@ public class TupleRoleFilm {
         return this.filmTitre;
     }
 
-    public String getNomActeur() {
+    public TuplePersonne getNomActeur() {
         return this.nomActeur;
     }
     
@@ -43,7 +43,7 @@ public class TupleRoleFilm {
         return this.anneeSortie;
     }
 
-    public void setNomActeur(String nomActeur) {
+    public void setNomActeur(TuplePersonne nomActeur) {
         this.nomActeur = nomActeur;
     }
 
