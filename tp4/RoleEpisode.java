@@ -85,6 +85,7 @@ class RoleEpisode {
         return listeActeur;
     }
         
+    @SuppressWarnings("unchecked")
     public Set<TupleRoleEpisode> serieAvecActeur(TuplePersonne acteur) {
         
         FreeVariables freeV = new FreeVariables();
