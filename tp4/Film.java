@@ -80,8 +80,7 @@ class Film {
         t.setDescription(description);
         t.setDuree(duree);
         
-        TupleFilm tmp = getFilm(t.getTitre(), t.getDateSortie());
-        //tmp.afficher();
+        //System.out.println((getFilm(t.getTitre(), t.getDateSortie())).afficher());
         
     }
 

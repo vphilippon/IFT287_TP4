@@ -62,7 +62,7 @@ class GestionPersonne {
                         + nom + " a realise au moins une serie.");
             }
             // S'il a un role dans au moins un film
-            if (!roleFilm.rolesDeActeur(nom).isEmpty()) {
+            if (!roleFilm.rolesDeActeur(personne.getPersonne(nom)).isEmpty()) {
                 throw new Tp4Exception("Impossible de supprimer, la personne "
                         + nom + " a un role dans au moins un film.");
             }
@@ -101,12 +101,12 @@ class GestionPersonne {
             throw new Tp4Exception("Impossible d'afficher, l'acteur " + nom
                     + " n'existe pas.");
         }
-        Set<TupleRoleFilm> tuples = roleFilm.rolesDeActeur(nom);
+        Set<TupleRoleFilm> tuples = roleFilm.rolesDeActeur(personne.getPersonne(nom));
 
         StringBuilder output = new StringBuilder();
         Iterator<TupleRoleFilm> it = tuples.iterator();
         while (it.hasNext()) {
-            output.append(it.next().getFilmTitre()).append(
+            output.append(it.next().getFilm()).append(
                     it.hasNext() ? ", " : ".");
         }
         System.out.println("L'acteur " + nom + " a participe aux films : ");

@@ -56,7 +56,7 @@ class GestionFilm {
                 throw new Tp4Exception("Impossible de supprimer, le film " + titre + " paru le " + dateSortie + " n'existe pas.");
             }
             //Verifie si un role est relier au film
-            if(roleFilm.aDesRoles(titre, dateSortie)){
+            if(roleFilm.aDesRoles(film.getFilm(titre,dateSortie))){
                 throw new Tp4Exception("Impossible de supprimer, le film " + titre + ", un/des role(s) y sont encore rattache.");
             }
             // Supression du film dans la table Film
@@ -109,16 +109,16 @@ class GestionFilm {
             }
             
             //verifie que le role n existe pas deja pour cette acteur
-            if (roleFilm.existe(nomActeur, titre, anneeSortie, role)) {
+            if (roleFilm.existe(film.getFilm(titre, anneeSortie), personne.getPersonne(nomActeur), role)) {
                 throw new Tp4Exception("L'acteur " + nomActeur + " joue deja le role " + role + " dans le film " + titre + ".");
             }
             
             //verifie que le role n'existe pas deja pour un autre acteur
-            if (roleFilm.existe(titre, anneeSortie, role)) {
+            if (roleFilm.existe(film.getFilm(titre, anneeSortie), role)) {
                 throw new Tp4Exception("Un autre acteur joue deja le role " + role + " dans le film " + titre + ".");
             }
 
-            roleFilm.ajouter(nomActeur, titre, anneeSortie, role);
+            roleFilm.ajouter(new TupleRoleFilm(personne.getPersonne(nomActeur), film.getFilm(titre, anneeSortie), role));
             tr.commit(ObjectStore.RETAIN_HOLLOW);
         } catch (Exception e) {
             tr.abort(ObjectStore.RETAIN_HOLLOW);
@@ -132,7 +132,7 @@ class GestionFilm {
             throw new Tp4Exception("Le film " + titre + " paru en " + anneeSortie + " n'existe pas.");
         }
         
-        Set <TuplePersonne> tuples = roleFilm.getActeurs(titre, anneeSortie);
+        Set <TuplePersonne> tuples = roleFilm.getActeurs(film.getFilm(titre, anneeSortie));
         StringBuilder output = new StringBuilder();
         Iterator<TuplePersonne> it = tuples.iterator();
         while(it.hasNext()){

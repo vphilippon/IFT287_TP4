@@ -8,15 +8,13 @@ public class TupleRoleFilm {
     private int Id;
     private TuplePersonne nomActeur;
     private String roleActeur;
-    private String filmTitre;
-    private Date anneeSortie;
+    private TupleFilm film;
     
-    TupleRoleFilm(TuplePersonne nomActeur, String roleActeur, String filmTitre, Date anneeSortie) {
+    TupleRoleFilm(TuplePersonne nomActeur, TupleFilm film, String roleActeur) {
         this.Id = ++courantId;
         this.nomActeur = nomActeur;
         this.roleActeur = roleActeur;
-        this.filmTitre = filmTitre;
-        this.anneeSortie = anneeSortie;
+        this.film = film;
     }
     
     public int getCourantId(){
@@ -27,20 +25,20 @@ public class TupleRoleFilm {
         return this.Id;
     }
     
-    public String getFilmTitre() {
-        return this.filmTitre;
+    public TupleFilm getFilm() {
+        return this.film;
     }
 
+    public void setFilm(TupleFilm film) {
+        this.film = film;
+    }
+    
     public TuplePersonne getNomActeur() {
         return this.nomActeur;
     }
     
     public String getRoleActeur() {
         return this.roleActeur;
-    }
-    
-    public Date getAnneeSortie() {
-        return this.anneeSortie;
     }
 
     public void setNomActeur(TuplePersonne nomActeur) {
@@ -49,15 +47,5 @@ public class TupleRoleFilm {
 
     public void setRoleActeur(String roleActeur) {
         this.roleActeur = roleActeur;
-    }
-
-    public void setFilmTitre(String filmTitre) {
-        this.filmTitre = filmTitre;
-    }
-
-    public void setAnneeSortie(Date anneeSortie) {
-        this.anneeSortie = anneeSortie;
-    }
-    
-    
+    }  
 }
