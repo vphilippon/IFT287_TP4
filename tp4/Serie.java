@@ -54,8 +54,6 @@ class Serie {
         return query.select(allSeries.values(), freeVB);
     }
     
-
-
     public TupleSerie getSerie(String titre, Date anneeSortie) {
 
         FreeVariables freeV = new FreeVariables();
