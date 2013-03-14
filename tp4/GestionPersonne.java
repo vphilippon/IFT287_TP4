@@ -16,13 +16,6 @@ class GestionPersonne {
 
     public GestionPersonne(Personne personne, Film film, RoleFilm roleFilm,
             Serie serie, RoleEpisode roleEpisode) throws Tp4Exception {
-        /* Needed? Don't think so...
-        if (cx != film.getConnexion() ||
-            cx != serie.getConnexion() ||
-            cx != roleFilm.getConnexion() ||
-            cx != roleEpisode.getConnexion()){
-            throw new Tp4Exception("Les instances de connexions dans GestionPersonne sont différentes");
-        }*/
         this.personne = personne;
         this.film = film;
         this.serie = serie;
@@ -39,8 +32,7 @@ class GestionPersonne {
                 throw new Tp4Exception("Impossible d'ajouter, la personne "
                         + nom + " existe deja.");
             }
-            TuplePersonne pers = new TuplePersonne(nom, dateNaissance,
-                    lieuNaissance, sexe);
+            TuplePersonne pers = new TuplePersonne(nom, dateNaissance, lieuNaissance, sexe);
             personne.ajouter(pers);
             tr.commit(ObjectStore.RETAIN_HOLLOW);
         } catch (Exception e) {
@@ -91,7 +83,7 @@ class GestionPersonne {
 
     public void afficherRealisateur() {
         Transaction tr = Transaction.begin(ObjectStore.READONLY);
-        Set<TuplePersonne> listeRealisateur = personne.realisateurDeFilms();
+        Set<TuplePersonne> listeRealisateur = film.realisateurDeFilms();
 
         StringBuilder output = new StringBuilder();
         Iterator<TuplePersonne> it = listeRealisateur.iterator();

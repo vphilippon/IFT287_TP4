@@ -5,14 +5,12 @@ import java.util.Set;
 
 class RoleEpisode {
 
-    private Connexion cx;
 //    private PreparedStatement stmtRoleEpisodeExiste;
 //    private PreparedStatement stmtAjouterRoleEpisode;
 //    private PreparedStatement stmtGetRoleEpisodeWithActeur;
 //    private PreparedStatement stmtRoleEpisodeAutreActeur;
     
     public RoleEpisode(Connexion cx) {
-        this.cx = cx;
         init();
     }
     
@@ -31,10 +29,6 @@ class RoleEpisode {
 //                        + " VALUES (?, ?, ?, ?, ?, ?)");
 //        stmtGetRoleEpisodeWithActeur = cx.getConnection().prepareStatement(
 //                "SELECT * FROM RoleEpisode WHERE nomActeur = ?");
-    }
-
-    public Connexion getConnexion() {
-        return cx;
     }
 
     public boolean existe(String serieTitre, Date serieDate, int noSaison,

@@ -5,7 +5,6 @@ import java.util.Set;
 
 class RoleFilm {
     
-    private Connexion cx;
 //    private PreparedStatement stmtRoleFilmExiste;
 //    private PreparedStatement stmtRoleFilmExistePourAutreActeur;
 //    private PreparedStatement stmtAjouteoRleFilm;
@@ -13,7 +12,6 @@ class RoleFilm {
 //    private PreparedStatement stmtGetRoleOfActeur;
 
     public RoleFilm(Connexion cx) {
-        this.cx = cx;
         init();
     }
     
@@ -30,10 +28,6 @@ class RoleFilm {
 //                        + " WHERE filmTitre = ? AND anneeSortie = ?)");
 //        stmtGetRoleOfActeur = cx.getConnection().prepareStatement(
 //                "SELECT * FROM RoleFilm WHERE nomActeur = ?");
-    }
-
-    public Connexion getConnexion() {
-        return cx;
     }
 
     public boolean existe(String nomActeur, String filmTitre, Date anneeSortie, String role) {

@@ -13,14 +13,8 @@ class GestionSerie {
     private Episode episode;
     private Personne personne;
     private RoleEpisode roleEpisode;
-    private Connexion cx;
 
     public GestionSerie(Serie serie, Episode episode, Personne personne, RoleEpisode roleEpisode) throws Tp4Exception {
-        this.cx = personne.getConnexion();
-//        if (cx != serie.getConnexion() || cx != episode.getConnexion() ||
-//            cx != personne.getConnexion() || cx != roleEpisode.getConnexion()){
-//            throw new Tp4Exception("Les instances de connexions dans GestionPersonne sont différentes");
-//        }
         this.episode = episode;
         this.personne = personne;
         this.serie = serie;

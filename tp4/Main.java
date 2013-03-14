@@ -22,7 +22,7 @@ public class Main {
 
     public static void main(String args[]) throws Exception {
         if (args.length < 1) {
-                System.out.println("Usage: java <bd>.odb [<fichier-transactions>]");
+                System.out.println("Usage: java tp4.Main <bd> [<fichier-transactions>]");
                 return;
         }
         

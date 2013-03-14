@@ -10,18 +10,16 @@ import java.util.Set;
 
 public class Personne {
 
-    private Connexion cx;
     private Map<String, TuplePersonne> allPersonnes;
 
     public Personne(Connexion cx) throws Exception {
-        this.cx = cx;
 
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
             try {
                 allPersonnes = (Map<String, TuplePersonne>) cx.getDatabase().getRoot("allPersonnes");
             } catch (DatabaseRootNotFoundException e) {
-                this.cx.getDatabase().createRoot("allPersonnes", 
+                cx.getDatabase().createRoot("allPersonnes", 
                         allPersonnes = new OSHashMap<String, TuplePersonne>(10));
             }
             tr.commit(ObjectStore.RETAIN_HOLLOW);
@@ -29,10 +27,6 @@ public class Personne {
             tr.abort(ObjectStore.RETAIN_HOLLOW);
             throw e;
         }
-    }
-
-    public Connexion getConnexion() {
-        return cx;
     }
 
     public boolean existe(String nom) {
@@ -53,18 +47,6 @@ public class Personne {
             return 0;
         else
             return 1;
-    }
-
-    public Set<TuplePersonne> realisateurDeFilms() {
-        // TODO à switcher vers RoleFilm pour itérer, surement
-        Set<TuplePersonne> listeRealisateur = null; // TEMP;
-//        ResultSet rs = stmtGetRealisateur.executeQuery();
-//        while (rs.next()) {
-//            listeRealisateur.add(new TuplePersonne(rs.getString(1), rs
-//                    .getDate(2), rs.getString(3), rs.getInt(4)));
-//        }
-//        rs.close();
-        return listeRealisateur;
     }
 
     public Set<TuplePersonne> acteursDeSerie(String serieTitre, Date serieDate) {

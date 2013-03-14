@@ -8,28 +8,22 @@ import java.util.*;
 
 class Film {
 
-    private Connexion cx;
     private Map<Integer, TupleFilm> allFilms;
 
     public Film(Connexion cx) throws Exception {
-        this.cx = cx;
         
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
             try {
                 allFilms = (Map<Integer, TupleFilm>) cx.getDatabase().getRoot("allFilms");
             } catch (DatabaseRootNotFoundException e) {
-                this.cx.getDatabase().createRoot("allFilms", allFilms = new OSHashMap<Integer, TupleFilm>(10));
+                cx.getDatabase().createRoot("allFilms", allFilms = new OSHashMap<Integer, TupleFilm>(10));
             }
             tr.commit(ObjectStore.RETAIN_HOLLOW);
         } catch (Exception e) {
             tr.abort(ObjectStore.RETAIN_HOLLOW);
             throw e;
         }
-    }
-
-    public Connexion getConnexion() {
-        return cx;
     }
 
     public boolean existe(String titre, Date dateSortie) {
@@ -112,5 +106,16 @@ class Film {
         freeVB.put("n", nom);
         
         return query.select(allFilms.values(), freeVB);
+    }
+    
+    public Set<TuplePersonne> realisateurDeFilms() {
+        Set<TuplePersonne> listeRealisateur = new OSHashSet<TuplePersonne>();
+        Iterator<TupleFilm> filmIterator = allFilms.values().iterator();
+        
+        while(filmIterator.hasNext()){
+            listeRealisateur.add(filmIterator.next().getRealisateur());
+        }
+        
+        return listeRealisateur;
     }
 }

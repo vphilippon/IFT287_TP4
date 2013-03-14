@@ -4,12 +4,10 @@ import java.util.Date;
 
 class Episode {
 
-    private Connexion cx;
 //    private PreparedStatement stmtEpisodeExiste;
 //    private PreparedStatement stmtAjouterEpisode;
 
     public Episode(Connexion cx) {
-        this.cx = cx;
         init();
     }
 
@@ -21,10 +19,6 @@ class Episode {
 //                "INSERT INTO Episode (titre, titreSerie, anneeSortieSerie,"
 //                        + " noSaison, noEpisode, description, dateDiffusion)"
 //                        + " VALUES (?, ?, ?, ?, ?, ?, ?)");
-    }
-
-    public Connexion getConnexion() {
-        return cx;
     }
 
     public boolean existe(String serieTitre, Date serieDate, int noSaison, int noEpisode) {

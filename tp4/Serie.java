@@ -5,14 +5,12 @@ import java.util.Set;
 
 class Serie {
 
-    private Connexion cx;
 //    private PreparedStatement stmtSerieExiste;
 //    private PreparedStatement stmtAjouterSerie;
 //    private PreparedStatement stmtSerieDeRealisateur;
 //    private PreparedStatement stmtSerieAvecActeur;
     
     public Serie(Connexion cx) {
-        this.cx = cx;
         init();
     }
 
@@ -27,10 +25,6 @@ class Serie {
 //        stmtSerieAvecActeur = cx.getConnection().prepareStatement(
 //                "SELECT * FROM Serie WHERE titre IN" 
 //                        + " (SELECT titreSerie FROM RoleEpisode WHERE nomActeur = ?)");
-    }
-
-    public Connexion getConnexion() {
-        return cx;
     }
 
     public boolean existe(String serieTitre, Date serieDate) {

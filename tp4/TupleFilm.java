@@ -10,9 +10,9 @@ class TupleFilm
     private Date dateSortie;
     private String description;
     private int duree;
-    private String realisateur;
+    private TuplePersonne realisateur;
 
-    public TupleFilm(String titre, Date dateSortie, String description, int duree, String realisateur) {
+    public TupleFilm(String titre, Date dateSortie, String description, int duree, TuplePersonne realisateur) {
         this.Id = ++courantId;
         this.titre = titre;
         this.dateSortie = dateSortie;
@@ -41,7 +41,7 @@ class TupleFilm
         return this.duree;
     }
 
-    public String getRealisateur() {
+    public TuplePersonne getRealisateur() {
         return this.realisateur;
     }
 
@@ -65,7 +65,7 @@ class TupleFilm
         this.duree = duree;
     }
 
-    public void setRealisateur(String realisateur) {
+    public void setRealisateur(TuplePersonne realisateur) {
         this.realisateur = realisateur;
     }
     

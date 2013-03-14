@@ -12,13 +12,8 @@ class GestionFilm {
     private Film film;
     private Personne personne;
     private RoleFilm roleFilm;
-    private Connexion cx;  // NEED?
 
     public GestionFilm(Film film, Personne personne, RoleFilm roleFilm) throws Tp4Exception{
-//        if (film.getConnexion() != personne.getConnexion()){
-//            throw new Tp4Exception("Connexions différentes dans GestionFilm");
-//        }
-        this.cx = film.getConnexion();
         this.film = film;
         this.roleFilm = roleFilm;
         this.personne = personne;
@@ -42,7 +37,8 @@ class GestionFilm {
                         " et ne peut pas avoir réaliser un film créé le: " + dateSortie);
             }  
             // Ajout du film dans la table des films
-            TupleFilm tFilm = new TupleFilm(titre, dateSortie, "", 0, realisateur);
+            TuplePersonne tRealisateur = personne.getPersonne(realisateur);
+            TupleFilm tFilm = new TupleFilm(titre, dateSortie, "", 0, tRealisateur);
             film.ajouter(tFilm);
             tr.commit(ObjectStore.RETAIN_HOLLOW);
         } catch (Exception e) {
@@ -105,7 +101,7 @@ class GestionFilm {
                 throw new Tp4Exception("Impossible d'ajouter l'acteur au film, le film " + titre + " paru le " + anneeSortie + " n'existe pas.");
             }
             
-            //verifie que l acteur est nee avant la sortie du film
+            //verifie que l'acteur est nee avant la sortie du film
             TuplePersonne acteur = personne.getPersonne(nomActeur);
             if(acteur.getDateNaissance().after(anneeSortie)){
                 throw new Tp4Exception("Impossible d'ajouter l'acteur au film, l'acteur " + nomActeur + " est nee avant la date de sortie du film.");
