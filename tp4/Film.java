@@ -10,6 +10,7 @@ class Film {
 
     private Map<Integer, TupleFilm> allFilms;
 
+    @SuppressWarnings("unchecked")
     public Film(Connexion cx) throws Exception {
         
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
@@ -84,6 +85,7 @@ class Film {
         
     }
 
+    @SuppressWarnings("unchecked")
     public Set<TupleFilm> filmDeRealisateur(TuplePersonne realisateur) {
         FreeVariables freeV = new FreeVariables();
         freeV.put("n", String.class);

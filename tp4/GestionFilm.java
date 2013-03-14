@@ -92,7 +92,7 @@ class GestionFilm {
     public void ajoutActeurFilm(String titre, Date anneeSortie, String nomActeur, String role) throws Exception {
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
-            //verifie si l acteur existe
+            //verifie si l'acteur existe
             if (!personne.existe(nomActeur)) {
                 throw new Tp4Exception("Impossible d'ajouter l'acteur au film, l'acteur " + nomActeur + " n'existe pas.");
             }
@@ -113,7 +113,6 @@ class GestionFilm {
                 throw new Tp4Exception("L'acteur " + nomActeur + " joue deja le role " + role + " dans le film " + titre + ".");
             }
             
-            //@TODO voir si cette verification devrait etre la ou pas!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             //verifie que le role n'existe pas deja pour un autre acteur
             if (roleFilm.existe(titre, anneeSortie, role)) {
                 throw new Tp4Exception("Un autre acteur joue deja le role " + role + " dans le film " + titre + ".");

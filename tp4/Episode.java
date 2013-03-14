@@ -1,19 +1,16 @@
 package tp4;
 
-import java.util.Map;
+import com.odi.*;
+import com.odi.util.*;
+import com.odi.util.query.*;
 
-import com.odi.DatabaseRootNotFoundException;
-import com.odi.ObjectStore;
-import com.odi.Transaction;
-import com.odi.util.OSHashMap;
-import com.odi.util.query.FreeVariableBindings;
-import com.odi.util.query.FreeVariables;
-import com.odi.util.query.Query;
+import java.util.*;
 
 class Episode {
 
     private Map<Integer, TupleEpisode> allEpisodes;
 
+    @SuppressWarnings("unchecked")
     public Episode(Connexion cx) throws Exception {
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
