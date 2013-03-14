@@ -44,7 +44,7 @@ class Serie {
         allSeries.put(newSerie.getId(), newSerie);
     }
 
-    public Set<TupleSerie> serieDeRealisateur(String nom) {
+    public Set<TupleSerie> serieDeRealisateur(TuplePersonne realisateur) {
         Set<TupleSerie> listeSerie = null; // TEMP;
 //        stmtSerieDeRealisateur.setString(1,nom);
 //        ResultSet rs = stmtSerieDeRealisateur.executeQuery();
