@@ -1,6 +1,6 @@
 package tp4;
 
-import java.sql.Date;
+import java.util.Date;
 
 class TupleFilm 
 {
