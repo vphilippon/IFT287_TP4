@@ -39,10 +39,26 @@ class Film {
 
     public int enlever(TupleFilm t){
         Object o = allFilms.remove(t.getIdFilm());
-        if (o == null)
+        if (o == null) {
             return 0;
-        else
+        }
+        else {
             return 1;
+        }
+    }
+    
+    public TupleFilm rechercher(int id){
+        Object o = allFilms.get(id);
+        
+        if(o instanceof TupleFilm){
+            if (o != null){
+                return (TupleFilm)o;
+            }
+            else {
+                return null;
+            }
+        }
+        return null;
     }
 
     public void listerFilm(String titre, Date dateSortie){
