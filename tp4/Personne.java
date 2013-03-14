@@ -1,12 +1,12 @@
 package tp4;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import com.odi.*;
 import com.odi.util.*;
+
+import java.util.Date;
+import java.util.Map;
+import java.util.Set;
+
 
 public class Personne {
 
@@ -21,7 +21,8 @@ public class Personne {
             try {
                 allPersonnes = (Map<String, TuplePersonne>) cx.getDatabase().getRoot("allPersonnes");
             } catch (DatabaseRootNotFoundException e) {
-                cx.getDatabase().createRoot("allPersonnes", allPersonnes = new OSHashMap<String, TuplePersonne>(10));
+                this.cx.getDatabase().createRoot("allPersonnes", 
+                        allPersonnes = new OSHashMap<String, TuplePersonne>(10));
             }
             tr.commit(ObjectStore.RETAIN_HOLLOW);
         } catch (Exception e) {
@@ -54,9 +55,9 @@ public class Personne {
             return 1;
     }
 
-    public List<TuplePersonne> realisateurDeFilms() {
+    public Set<TuplePersonne> realisateurDeFilms() {
         // TODO à switcher vers RoleFilm pour itérer, surement
-        List<TuplePersonne> listeRealisateur = new ArrayList<TuplePersonne>();
+        Set<TuplePersonne> listeRealisateur = null; // TEMP;
 //        ResultSet rs = stmtGetRealisateur.executeQuery();
 //        while (rs.next()) {
 //            listeRealisateur.add(new TuplePersonne(rs.getString(1), rs
@@ -66,9 +67,9 @@ public class Personne {
         return listeRealisateur;
     }
 
-    public List<TuplePersonne> acteursDeSerie(String serieTitre, Date serieDate) {
+    public Set<TuplePersonne> acteursDeSerie(String serieTitre, Date serieDate) {
         // TODO à switcher ver RoleEpisode pour itérer, surement
-        List<TuplePersonne> listeActeur = new ArrayList<TuplePersonne>();
+        Set<TuplePersonne> listeActeur = null; // TEMP;
 //        stmtGetActeurDeSerie.setString(1, serieTitre);
 //        stmtGetActeurDeSerie.setDate(2, serieDate);
 //        ResultSet rs = stmtGetActeurDeSerie.executeQuery();
