@@ -37,34 +37,24 @@ class Serie {
         freeVB.put("d", serieDate); 
         
         return !(query.select(allSeries.values(), freeVB).isEmpty());
-        
     }
     
     public void ajouter(TupleSerie newSerie) {
         allSeries.put(newSerie.getId(), newSerie);
     }
 
-    public Set<TupleSerie> serieDeRealisateur(String nom) {
-        Set<TupleSerie> listeSerie = null; // TEMP;
-//        stmtSerieDeRealisateur.setString(1,nom);
-//        ResultSet rs = stmtSerieDeRealisateur.executeQuery();
-//        while(rs.next()){
-//            listeSerie.add(new TupleSerie(rs.getString(1),rs.getDate(2),rs.getString(3),rs.getString(4), rs.getInt(5)));
-//        }
-//        rs.close();
-        return listeSerie;
+    public Set<TupleSerie> serieDeRealisateur(TuplePersonne realisateur) {
+
+        FreeVariables freeV = new FreeVariables();
+        freeV.put("r", TuplePersonne.class);
+        Query query = new Query(TupleSerie.class, "getRealisateur() == r", freeV);
+        FreeVariableBindings freeVB = new FreeVariableBindings();
+        freeVB.put("r", realisateur);
+        
+        return query.select(allSeries.values(), freeVB);
     }
     
-    public Set<TupleSerie> serieAvecActeur(String nom) {
-        Set<TupleSerie> listeSerie = null; // TEMP;
-//        stmtSerieAvecActeur.setString(1,nom);
-//        ResultSet rs = stmtSerieAvecActeur.executeQuery();
-//        while(rs.next()){
-//            listeSerie.add(new TupleSerie(rs.getString(1),rs.getDate(2),rs.getString(3),rs.getString(4), rs.getInt(5)));
-//        }
-//        rs.close();
-        return listeSerie;
-    }
+
 
     public TupleSerie getSerie(String titre, Date anneeSortie) {
 
