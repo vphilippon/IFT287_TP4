@@ -5,8 +5,6 @@ import com.odi.util.*;
 import com.odi.util.query.*;
 import java.util.*;
 
-import com.odi.util.OSHashSet;
-
 class RoleEpisode {
     
     private Map<Integer, TupleRoleEpisode> allRoleEpisodes;
@@ -35,7 +33,7 @@ class RoleEpisode {
         freeV.put("e", TupleEpisode.class);
         freeV.put("a", TuplePersonne.class);
         freeV.put("r", String.class);
-        Query query = new Query(TupleRoleEpisode.class, "getSerie() == s && getEpisode() == e && getNomActeur() == a && getRole().equals( r )", freeV);
+        Query query = new Query(TupleRoleEpisode.class, "getSerie() == s && getEpisode() == e && getNomActeur() == a && getRole().equals(r)", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
         freeVB.put("s", serie);
         freeVB.put("e", episode);

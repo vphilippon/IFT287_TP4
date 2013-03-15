@@ -30,7 +30,7 @@ class Film {
         FreeVariables freeV = new FreeVariables();
         freeV.put("t", String.class);
         freeV.put("d", OSDate.class);
-        Query query = new Query(TupleFilm.class, "getTitre() == t && getOSDateSortie() == d", freeV);
+        Query query = new Query(TupleFilm.class, "getTitre() == t && getDateSortie() == d", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
         freeVB.put("t", titre);
         freeVB.put("d", dateSortie);
@@ -46,7 +46,7 @@ class Film {
         FreeVariables freeV = new FreeVariables();
         freeV.put("t", String.class);
         freeV.put("d", OSDate.class);
-        Query query = new Query(TupleFilm.class, "getTitre() == t && getOSDateSortie() == d", freeV);
+        Query query = new Query(TupleFilm.class, "getTitre() == t && getDateSortie() == d", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
         freeVB.put("t", titre);
         freeVB.put("d", dateSortie);

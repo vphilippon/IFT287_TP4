@@ -44,19 +44,20 @@ class Serie {
         allSeries.put(newSerie.getId(), newSerie);
     }
 
+    @SuppressWarnings("unchecked")
     public Set<TupleSerie> serieDeRealisateur(TuplePersonne realisateur) {
-        Set<TupleSerie> listeSerie = null; // TEMP;
-//        stmtSerieDeRealisateur.setString(1,nom);
-//        ResultSet rs = stmtSerieDeRealisateur.executeQuery();
-//        while(rs.next()){
-//            listeSerie.add(new TupleSerie(rs.getString(1),rs.getOSDate(2),rs.getString(3),rs.getString(4), rs.getInt(5)));
-//        }
-//        rs.close();
-        return listeSerie;
+        FreeVariables freeV = new FreeVariables();
+        freeV.put("r", TuplePersonne.class);
+        Query query = new Query(TupleSerie.class, "getRealisateur() == r", freeV);
+        FreeVariableBindings freeVB = new FreeVariableBindings();
+        freeVB.put("r", realisateur);
+        
+        return query.select(allSeries.values(), freeVB);
     }
     
     public Set<TupleSerie> serieAvecActeur(String nom) {
         Set<TupleSerie> listeSerie = null; // TEMP;
+        // TODO that
 //        stmtSerieAvecActeur.setString(1,nom);
 //        ResultSet rs = stmtSerieAvecActeur.executeQuery();
 //        while(rs.next()){
