@@ -69,13 +69,12 @@ class Film {
         t.setDuree(duree);
         // TODO Check si fonctionne
 //        System.out.println((getFilm(t.getTitre(), t.getDateSortie())).afficher()); // TODO pour test
-        
     }
 
     @SuppressWarnings("unchecked")
     public Set<TupleFilm> filmDeRealisateur(TuplePersonne realisateur) {
         FreeVariables freeV = new FreeVariables();
-        freeV.put("n", String.class);
+        freeV.put("n", TuplePersonne.class);
         Query query = new Query(TupleFilm.class, "getRealisateur() == n", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
         freeVB.put("n", realisateur);

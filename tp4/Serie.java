@@ -70,7 +70,7 @@ class Serie {
 
         FreeVariables freeV = new FreeVariables();
         freeV.put("t", String.class);
-        freeV.put("d", String.class);
+        freeV.put("d", OSDate.class);
         Query query = new Query(TupleSerie.class, "getTitre().equals(t) && getAnneeSortie().equals(d)", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
         freeVB.put("t", titre);

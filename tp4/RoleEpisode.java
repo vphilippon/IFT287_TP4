@@ -89,7 +89,7 @@ class RoleEpisode {
     public Set<TupleRoleEpisode> serieAvecActeur(TuplePersonne acteur) {
         
         FreeVariables freeV = new FreeVariables();
-        freeV.put("a", acteur);
+        freeV.put("a", TuplePersonne.class);
         Query query = new Query(TupleRoleEpisode.class, "getNomActeur() == a", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
         freeVB.put("a", acteur);

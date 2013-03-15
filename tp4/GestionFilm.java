@@ -62,9 +62,7 @@ class GestionFilm {
             int nb = film.enlever(t);
             tr.commit(ObjectStore.RETAIN_HOLLOW);
             System.out.println(nb + " film supprimé");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             tr.abort(ObjectStore.RETAIN_HOLLOW);
             throw e;
         }
@@ -79,8 +77,7 @@ class GestionFilm {
             }
             film.ajouterDescription(film.getFilm(titre, anneeSortie), description, duree);
             tr.commit(ObjectStore.RETAIN_HOLLOW);
-        }
-        catch(Exception e){
+        } catch(Exception e) {
             tr.abort(ObjectStore.RETAIN_HOLLOW);
             throw e;
         }

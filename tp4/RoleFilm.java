@@ -29,7 +29,7 @@ class RoleFilm {
         FreeVariables freeV = new FreeVariables();
         freeV.put("tp", TuplePersonne.class);
         freeV.put("tf", TupleFilm.class);
-        freeV.put("r", Date.class);
+        freeV.put("r", String.class);
         Query query = new Query(TupleRoleFilm.class, "getNomActeur() == tp && getFilm() == tf && r.equals(getRoleActeur())", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
         freeVB.put("tp", tp);
@@ -55,7 +55,7 @@ class RoleFilm {
     
     public boolean existe(TupleFilm tf, String role) {
         FreeVariables freeV = new FreeVariables();
-        freeV.put("ft", TupleFilm.class);
+        freeV.put("tf", TupleFilm.class);
         freeV.put("r", String.class);
         Query query = new Query(TupleRoleFilm.class, "getFilm() == tf && getRoleActeur() == r", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
@@ -71,7 +71,7 @@ class RoleFilm {
 
     public boolean aDesRoles(TupleFilm tf) {
         FreeVariables freeV = new FreeVariables();
-        freeV.put("ft", TupleFilm.class);
+        freeV.put("tf", TupleFilm.class);
         Query query = new Query(TupleRoleFilm.class, "getFilm() == tf", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
         freeVB.put("tf", tf);

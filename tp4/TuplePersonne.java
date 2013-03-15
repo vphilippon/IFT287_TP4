@@ -9,7 +9,7 @@ public class TuplePersonne {
     private String lieuNaissance;
     private Integer sexe;
     
-    public TuplePersonne(String nom, OSDate dateNaissance, String lieuNaissance, Integer sexe){
+    public TuplePersonne(String nom, OSDate dateNaissance, String lieuNaissance, Integer sexe) {
         this.nom = nom;
         this.dateNaissance = dateNaissance;
         this.lieuNaissance = lieuNaissance;
