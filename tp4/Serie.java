@@ -54,18 +54,6 @@ class Serie {
         
         return query.select(allSeries.values(), freeVB);
     }
-    
-    public Set<TupleSerie> serieAvecActeur(String nom) {
-        Set<TupleSerie> listeSerie = null; // TEMP;
-        // TODO that
-//        stmtSerieAvecActeur.setString(1,nom);
-//        ResultSet rs = stmtSerieAvecActeur.executeQuery();
-//        while(rs.next()){
-//            listeSerie.add(new TupleSerie(rs.getString(1),rs.getOSDate(2),rs.getString(3),rs.getString(4), rs.getInt(5)));
-//        }
-//        rs.close();
-        return listeSerie;
-    }
 
     public TupleSerie getSerie(String titre, OSDate anneeSortie) {
 
