@@ -2,17 +2,18 @@ package tp4;
 
 import com.odi.util.*;
 
-class TupleFilm 
-{
-    static private Integer courantId = 0;
-    private Integer Id;
-    private String titre;
-    private OSDate dateSortie;
-    private String description;
-    private Integer duree;
-    private TuplePersonne realisateur;
+public class TupleFilm {
 
-    public TupleFilm(String titre, OSDate dateSortie, String description, int duree, TuplePersonne realisateur) {
+    static private Integer courantId = 0;
+    private Integer        Id;
+    private String         titre;
+    private OSDate         dateSortie;
+    private String         description;
+    private Integer        duree;
+    private TuplePersonne  realisateur;
+
+    public TupleFilm(String titre, OSDate dateSortie, String description, int duree,
+                     TuplePersonne realisateur) {
         this.Id = ++courantId;
         this.titre = titre;
         this.dateSortie = dateSortie;
@@ -63,5 +64,9 @@ class TupleFilm
 
     public Integer getId() {
         return Id;
-    } 
+    }
+
+    public String toString() {
+        return titre + " paru le " + dateSortie;
+    }
 }

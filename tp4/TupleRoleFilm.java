@@ -1,24 +1,24 @@
 package tp4;
 
 public class TupleRoleFilm {
-    
+
     static private Integer courantId = 0;
-    private Integer Id;
-    private TuplePersonne nomActeur;
-    private String roleActeur;
-    private TupleFilm film;
-    
-    TupleRoleFilm(TuplePersonne nomActeur, TupleFilm film, String roleActeur) {
+    private Integer        Id;
+    private TuplePersonne  acteur;
+    private String         role;
+    private TupleFilm      film;
+
+    TupleRoleFilm(TuplePersonne acteur, TupleFilm film, String role) {
         this.Id = ++courantId;
-        this.nomActeur = nomActeur;
-        this.roleActeur = roleActeur;
+        this.acteur = acteur;
+        this.role = role;
         this.film = film;
     }
-    
-    public Integer getId(){
+
+    public Integer getId() {
         return this.Id;
     }
-    
+
     public TupleFilm getFilm() {
         return this.film;
     }
@@ -26,20 +26,20 @@ public class TupleRoleFilm {
     public void setFilm(TupleFilm film) {
         this.film = film;
     }
-    
-    public TuplePersonne getNomActeur() {
-        return this.nomActeur;
-    }
-    
-    public String getRoleActeur() {
-        return this.roleActeur;
+
+    public TuplePersonne getActeur() {
+        return this.acteur;
     }
 
-    public void setNomActeur(TuplePersonne nomActeur) {
-        this.nomActeur = nomActeur;
+    public void setActeur(TuplePersonne acteur) {
+        this.acteur = acteur;
     }
 
-    public void setRoleActeur(String roleActeur) {
-        this.roleActeur = roleActeur;
-    }  
+    public String getRole() {
+        return this.role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

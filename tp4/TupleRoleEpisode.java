@@ -1,20 +1,17 @@
 package tp4;
 
 public class TupleRoleEpisode {
-    
+
     static private Integer courantId = 0;
-    private Integer Id;
-    private TuplePersonne nomActeur;
-    private String roleActeur;
-    private TupleSerie serie;
-    private TupleEpisode episode;
-    
-    public TupleRoleEpisode(TuplePersonne nomActeur, String roleActeur, TupleSerie serie, 
-            TupleEpisode episode) {
+    private Integer        Id;
+    private TuplePersonne  acteur;
+    private String         role;
+    private TupleEpisode   episode;
+
+    public TupleRoleEpisode(TuplePersonne acteur, String role, TupleEpisode episode) {
         this.Id = ++courantId;
-        this.nomActeur = nomActeur;
-        this.roleActeur = roleActeur;
-        this.serie = serie;
+        this.acteur = acteur;
+        this.role = role;
         this.episode = episode;
     }
 
@@ -22,28 +19,20 @@ public class TupleRoleEpisode {
         return Id;
     }
 
-    public TuplePersonne getNomActeur() {
-        return nomActeur;
+    public TuplePersonne getActeur() {
+        return acteur;
     }
 
-    public void setNomActeur(TuplePersonne nomActeur) {
-        this.nomActeur = nomActeur;
+    public void setActeur(TuplePersonne acteur) {
+        this.acteur = acteur;
     }
 
-    public String getRoleActeur() {
-        return roleActeur;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoleActeur(String roleActeur) {
-        this.roleActeur = roleActeur;
-    }
-
-    public TupleSerie getSerie() {
-        return serie;
-    }
-
-    public void setSerie(TupleSerie serie) {
-        this.serie = serie;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public TupleEpisode getEpisode() {

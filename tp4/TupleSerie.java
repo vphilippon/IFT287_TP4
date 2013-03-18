@@ -3,20 +3,20 @@ package tp4;
 import com.odi.util.*;
 
 public class TupleSerie {
-    
-    static private Integer courantId = 0;
-    private Integer Id;
-    private String titre;
-    private OSDate anneeSortie;
-    private TuplePersonne realisateur;
-    private String description;
-    private Integer nbSaison;
 
-    public TupleSerie(String titre, OSDate anneeSortie, TuplePersonne realisateur, 
-            String description, Integer nbSaison) {
+    static private Integer courantId = 0;
+    private Integer        Id;
+    private String         titre;
+    private OSDate         dateSortie;
+    private TuplePersonne  realisateur;
+    private String         description;
+    private Integer        nbSaison;
+
+    public TupleSerie(String titre, OSDate dateSortie, TuplePersonne realisateur,
+                      String description, Integer nbSaison) {
         this.Id = ++courantId;
         this.titre = titre;
-        this.anneeSortie = anneeSortie;
+        this.dateSortie = dateSortie;
         this.realisateur = realisateur;
         this.description = description;
         this.nbSaison = nbSaison;
@@ -34,12 +34,12 @@ public class TupleSerie {
         this.titre = titre;
     }
 
-    public OSDate getAnneeSortie() {
-        return anneeSortie;
+    public OSDate getDateSortie() {
+        return dateSortie;
     }
 
-    public void setAnneeSortie(OSDate anneeSortie) {
-        this.anneeSortie = anneeSortie;
+    public void setDateSortie(OSDate dateSortie) {
+        this.dateSortie = dateSortie;
     }
 
     public TuplePersonne getRealisateur() {
@@ -64,5 +64,9 @@ public class TupleSerie {
 
     public void setNbSaison(Integer nbSaison) {
         this.nbSaison = nbSaison;
+    }
+
+    public String toString() {
+        return titre + " paru le " + dateSortie;
     }
 }

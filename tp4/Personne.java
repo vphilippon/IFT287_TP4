@@ -10,13 +10,13 @@ public class Personne {
 
     @SuppressWarnings("unchecked")
     public Personne(Connexion cx) throws Exception {
-
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
             try {
-                allPersonnes = (Map<String, TuplePersonne>) cx.getDatabase().getRoot("allPersonnes");
+                allPersonnes = (Map<String, TuplePersonne>) cx.getDatabase().getRoot(
+                        "allPersonnes");
             } catch (DatabaseRootNotFoundException e) {
-                cx.getDatabase().createRoot("allPersonnes", 
+                cx.getDatabase().createRoot("allPersonnes",
                         allPersonnes = new OSHashMap<String, TuplePersonne>(10));
             }
             tr.commit(ObjectStore.RETAIN_HOLLOW);

@@ -3,19 +3,20 @@ package tp4;
 import com.odi.util.*;
 
 public class TuplePersonne {
-    
-    private String nom;
-    private OSDate dateNaissance;
-    private String lieuNaissance;
+
+    private String  nom;
+    private OSDate  dateNaissance;
+    private String  lieuNaissance;
     private Integer sexe;
-    
-    public TuplePersonne(String nom, OSDate dateNaissance, String lieuNaissance, Integer sexe) {
+
+    public TuplePersonne(String nom, OSDate dateNaissance, String lieuNaissance,
+                         Integer sexe) {
         this.nom = nom;
         this.dateNaissance = dateNaissance;
         this.lieuNaissance = lieuNaissance;
         this.sexe = sexe;
     }
-    
+
     public String getNom() {
         return nom;
     }
@@ -46,5 +47,9 @@ public class TuplePersonne {
 
     public void setSexe(Integer sexe) {
         this.sexe = sexe;
+    }
+
+    public String toString() {
+        return nom;
     }
 }

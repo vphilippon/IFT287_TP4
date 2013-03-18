@@ -2,18 +2,19 @@ package tp4;
 
 import com.odi.util.*;
 
-class TupleEpisode 
-{
-    static private Integer courantId = 0;
-    private Integer Id;
-    private String titreEpisode;
-    private TupleSerie serie;
-    private Integer noSaison;
-    private Integer noEpisode;
-    private String description;
-    private OSDate dateDiffusion;
+public class TupleEpisode {
 
-    public TupleEpisode(String titreEpisode, TupleSerie serie, int noSaison, int noEpisode, String description, OSDate dateDiffusion) {
+    static private Integer courantId = 0;
+    private Integer        Id;
+    private String         titreEpisode;
+    private TupleSerie     serie;
+    private Integer        noSaison;
+    private Integer        noEpisode;
+    private String         description;
+    private OSDate         dateDiffusion;
+
+    public TupleEpisode(String titreEpisode, TupleSerie serie, int noSaison,
+                        int noEpisode, String description, OSDate dateDiffusion) {
         this.Id = ++courantId;
         this.titreEpisode = titreEpisode;
         this.serie = serie;
@@ -22,8 +23,8 @@ class TupleEpisode
         this.description = description;
         this.dateDiffusion = dateDiffusion;
     }
-    
-    public Integer getId(){
+
+    public Integer getId() {
         return this.Id;
     }
 

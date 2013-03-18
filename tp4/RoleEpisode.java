@@ -6,7 +6,7 @@ import com.odi.util.query.*;
 import java.util.*;
 
 class RoleEpisode {
-    
+
     private Map<Integer, TupleRoleEpisode> allRoleEpisodes;
 
     @SuppressWarnings("unchecked")
@@ -14,9 +14,10 @@ class RoleEpisode {
         Transaction tr = Transaction.begin(ObjectStore.UPDATE);
         try {
             try {
-                allRoleEpisodes = (Map<Integer, TupleRoleEpisode>) cx.getDatabase().getRoot("allRoleEpisodes");
+                allRoleEpisodes = (Map<Integer, TupleRoleEpisode>) cx.getDatabase().getRoot(
+                        "allRoleEpisodes");
             } catch (DatabaseRootNotFoundException e) {
-                cx.getDatabase().createRoot("allRoleEpisodes", 
+                cx.getDatabase().createRoot("allRoleEpisodes",
                         allRoleEpisodes = new OSHashMap<Integer, TupleRoleEpisode>(10));
             }
             tr.commit(ObjectStore.RETAIN_HOLLOW);
@@ -25,21 +26,18 @@ class RoleEpisode {
             throw e;
         }
     }
-    
-    public boolean existe(TupleSerie serie, TupleEpisode episode, TuplePersonne acteur, String roleActeur) {
-        
+
+    public boolean existe(TupleEpisode episode, TuplePersonne acteur, String roleActeur) {
         FreeVariables freeV = new FreeVariables();
-        freeV.put("s", TupleSerie.class);
         freeV.put("e", TupleEpisode.class);
         freeV.put("a", TuplePersonne.class);
         freeV.put("r", String.class);
-        Query query = new Query(TupleRoleEpisode.class, "getSerie() == s && getEpisode() == e && getNomActeur() == a && getRole().equals(r)", freeV);
+        Query query = new Query(TupleRoleEpisode.class,
+                "getEpisode() == e && getActeur() == a && getRole().equals(r)", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
-        freeVB.put("s", serie);
         freeVB.put("e", episode);
         freeVB.put("a", acteur);
         freeVB.put("r", roleActeur);
-        
         return !(query.select(allRoleEpisodes.values(), freeVB).isEmpty());
     }
 
@@ -47,52 +45,48 @@ class RoleEpisode {
         allRoleEpisodes.put(roleEpisode.getId(), roleEpisode);
     }
 
-    @SuppressWarnings("unchecked")
-    public Set<TupleRoleEpisode> rolesDeActeur(TuplePersonne personne) {
+    public boolean existeRole(TupleEpisode episode, String roleActeur) {
         FreeVariables freeV = new FreeVariables();
-        freeV.put("a", TuplePersonne.class);
-        Query query = new Query(TupleRoleEpisode.class, "getNomActeur() == a", freeV);
-        FreeVariableBindings freeVB = new FreeVariableBindings();
-        freeVB.put("a", personne);
-        
-        return query.select(allRoleEpisodes.values(), freeVB);
-    }
-    
-    public boolean existeRole(TupleSerie serie, TupleEpisode episode, String roleActeur) {
-        FreeVariables freeV = new FreeVariables();
-        freeV.put("s", TupleSerie.class);
         freeV.put("e", TupleEpisode.class);
         freeV.put("r", String.class);
-        Query query = new Query(TupleRoleEpisode.class, "getSerie() == s && getEpisode() == e && getRole().equals(r)", freeV);
+        Query query = new Query(TupleRoleEpisode.class,
+                "getEpisode() == e && getRole().equals(r)", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
-        freeVB.put("s", serie);
         freeVB.put("e", episode);
         freeVB.put("r", roleActeur);
-        
         return !(query.select(allRoleEpisodes.values(), freeVB).isEmpty());
     }
 
-	public Set<TuplePersonne> acteursDeSerie(TupleSerie serie) {
+    @SuppressWarnings("unchecked")
+    public Set<TuplePersonne> acteursDeSerie(TupleSerie serie) {
         Set<TuplePersonne> listeActeur = new OSHashSet<TuplePersonne>();
-        Iterator<TupleRoleEpisode> roleIterator = allRoleEpisodes.values().iterator();
-        
-        while(roleIterator.hasNext()){
-            listeActeur.add(roleIterator.next().getNomActeur());
+        FreeVariables freeV = new FreeVariables();
+        freeV.put("s", TupleSerie.class);
+        Query query = new Query(TupleRoleEpisode.class, "getEpisode().getSerie() == s",
+                freeV);
+        FreeVariableBindings freeVB = new FreeVariableBindings();
+        freeVB.put("s", serie);
+        Set<TupleRoleEpisode> result = query.select(allRoleEpisodes.values(), freeVB);
+        Iterator<TupleRoleEpisode> roleIterator = result.iterator();
+        while (roleIterator.hasNext()) {
+            listeActeur.add(roleIterator.next().getActeur());
         }
-
         return listeActeur;
     }
-        
+
     @SuppressWarnings("unchecked")
-    public Set<TupleRoleEpisode> serieAvecActeur(TuplePersonne acteur) {
-        
+    public Set<TupleSerie> serieAvecActeur(TuplePersonne acteur) {
+        Set<TupleSerie> listeSerie = new OSHashSet<TupleSerie>();
         FreeVariables freeV = new FreeVariables();
         freeV.put("a", TuplePersonne.class);
-        Query query = new Query(TupleRoleEpisode.class, "getNomActeur() == a", freeV);
+        Query query = new Query(TupleRoleEpisode.class, "getActeur() == a", freeV);
         FreeVariableBindings freeVB = new FreeVariableBindings();
         freeVB.put("a", acteur);
-        
-        return query.select(allRoleEpisodes.values(), freeVB);
+        Set<TupleRoleEpisode> result = query.select(allRoleEpisodes.values(), freeVB);
+        Iterator<TupleRoleEpisode> roleIterator = result.iterator();
+        while (roleIterator.hasNext()) {
+            listeSerie.add(roleIterator.next().getEpisode().getSerie());
+        }
+        return listeSerie;
     }
-    
 }
