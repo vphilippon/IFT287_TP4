@@ -5,7 +5,7 @@ import com.odi.util.*;
 public class TupleEpisode {
 
     static private Integer courantId = 0;
-    private Integer        Id;
+    private Integer  Id;
     private String         titreEpisode;
     private TupleSerie     serie;
     private Integer        noSaison;
@@ -74,5 +74,9 @@ public class TupleEpisode {
 
     public void setDateDiffusion(OSDate dateDiffusion) {
         this.dateDiffusion = dateDiffusion;
+    }
+
+    public static void setCourantId(Integer courant) {
+        courantId = courant;
     }
 }

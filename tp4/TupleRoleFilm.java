@@ -3,7 +3,7 @@ package tp4;
 public class TupleRoleFilm {
 
     static private Integer courantId = 0;
-    private Integer        Id;
+    private Integer  Id;
     private TuplePersonne  acteur;
     private String         role;
     private TupleFilm      film;
@@ -41,5 +41,9 @@ public class TupleRoleFilm {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public static void setCourantId(Integer courant) {
+        courantId = courant;
     }
 }

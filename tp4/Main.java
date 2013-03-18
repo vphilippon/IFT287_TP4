@@ -19,7 +19,7 @@ public class Main {
 
     private static GestionTp4 gestionTp4;
 
-    public static void main(String args[]) throws Exception {
+    public static void main(String args[]) {
         if (args.length < 1) {
             System.out.println("Usage: java tp4.Main <bd> [<fichier-transactions>]");
             return;

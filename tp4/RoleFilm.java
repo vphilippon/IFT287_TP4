@@ -16,6 +16,13 @@ class RoleFilm {
             try {
                 allRoleFilms = (Map<Integer, TupleRoleFilm>) cx.getDatabase().getRoot(
                         "allRoleFilms");
+                Iterator<TupleRoleFilm> it = allRoleFilms.values().iterator();
+                int max = 0;
+                while(it.hasNext()){
+                    int courrant = it.next().getId();
+                    max = courrant > max ? courrant : max;
+                }
+                TupleRoleFilm.setCourantId(max);
             } catch (DatabaseRootNotFoundException e) {
                 cx.getDatabase().createRoot("allRoleFilms",
                         allRoleFilms = new OSHashMap<Integer, TupleRoleFilm>(10));

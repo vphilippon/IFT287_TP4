@@ -16,6 +16,13 @@ class Serie {
             try {
                 allSeries = (Map<Integer, TupleSerie>) cx.getDatabase().getRoot(
                         "allSeries");
+                Iterator<TupleSerie> it = allSeries.values().iterator();
+                int max = 0;
+                while(it.hasNext()){
+                    int courrant = it.next().getId();
+                    max = courrant > max ? courrant : max;
+                }
+                TupleSerie.setCourantId(max);
             } catch (DatabaseRootNotFoundException e) {
                 cx.getDatabase().createRoot("allSeries",
                         allSeries = new OSHashMap<Integer, TupleSerie>(10));

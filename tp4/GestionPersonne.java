@@ -30,6 +30,12 @@ class GestionPersonne {
                 throw new Tp4Exception("Impossible d'ajouter la personne " + nom
                         + " : la personne existe deja.");
             }
+            // Verifie si le sexe est valide
+            if (sexe < 0 || sexe > 1) {
+                throw new Tp4Exception("Impossible d'ajouter la personne " + nom
+                        + " : le sexe est invalide.");
+            }
+
             TuplePersonne pers = new TuplePersonne(nom, dateNaissance, lieuNaissance,
                     sexe);
             personne.ajouter(pers);

@@ -5,7 +5,7 @@ import com.odi.util.*;
 public class TupleFilm {
 
     static private Integer courantId = 0;
-    private Integer        Id;
+    private Integer  Id;
     private String         titre;
     private OSDate         dateSortie;
     private String         description;
@@ -68,5 +68,9 @@ public class TupleFilm {
 
     public String toString() {
         return titre + " paru le " + dateSortie;
+    }
+
+    public static void setCourantId(Integer courant) {
+        courantId = courant;
     }
 }

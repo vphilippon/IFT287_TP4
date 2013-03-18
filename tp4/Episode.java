@@ -16,6 +16,13 @@ class Episode {
             try {
                 allEpisodes = (Map<Integer, TupleEpisode>) cx.getDatabase().getRoot(
                         "allEpisodes");
+                Iterator<TupleEpisode> it = allEpisodes.values().iterator();
+                int max = 0;
+                while(it.hasNext()){
+                    int courrant = it.next().getId();
+                    max = courrant > max ? courrant : max;
+                }
+                TupleEpisode.setCourantId(max);
             } catch (DatabaseRootNotFoundException e) {
                 cx.getDatabase().createRoot("allEpisodes",
                         allEpisodes = new OSHashMap<Integer, TupleEpisode>(10));

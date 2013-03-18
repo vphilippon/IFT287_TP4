@@ -5,7 +5,7 @@ import com.odi.util.*;
 public class TupleSerie {
 
     static private Integer courantId = 0;
-    private Integer        Id;
+    private Integer  Id;
     private String         titre;
     private OSDate         dateSortie;
     private TuplePersonne  realisateur;
@@ -20,6 +20,10 @@ public class TupleSerie {
         this.realisateur = realisateur;
         this.description = description;
         this.nbSaison = nbSaison;
+    }
+    
+    public static void setCourantId(Integer courant){
+        courantId = courant;
     }
 
     public Integer getId() {
